@@ -23,8 +23,9 @@ public class Main {
 
         // Assignments for task
         ArrayList<People> peopleArrayList = new ArrayList<>();
-        peopleArrayList.add(new People("Grizmo", new Date(26,10,2003), "21000709"));
-        peopleArrayList.add(new People("Hoang Tu", new Date(26,10,2005), "23000709"));
+        peopleArrayList.add(new People("htmlexe", new Date(10,12,2003), "21000245"));
+        peopleArrayList.add(new People("Mlisfi", new Date(25,10,2003), "21000708"));
+        peopleArrayList.add(new People("Grizmo", new Date(26,10,2005), "23000709"));
 
         // init task 1
         Task task = new Task("Task1", "Nothing for task1", new Date(26,10,2023), peopleArrayList);
