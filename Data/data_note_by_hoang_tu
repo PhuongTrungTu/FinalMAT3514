@@ -1,0 +1,3 @@
+Tất cả dữ liệu được ghi theo định dạng json, dữ liệu khi thêm vào,nếu là danh sách theo list thì sẽ
+hiển thị theo kiểu list. Dữ liệu được đọc vào sẽ hiển thị theo kiểu JsonNode và được lấy dữ liệu đưa
+ngược về manager để thuận tiện trong xử lý. 

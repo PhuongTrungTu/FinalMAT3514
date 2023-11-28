@@ -60,5 +60,9 @@ public class Main {
         // display
         System.out.println(manager);
 
+        manager.writeData("Data/");
+
+
+
     }
 }

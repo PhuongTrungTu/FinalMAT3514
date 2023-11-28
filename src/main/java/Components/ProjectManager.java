@@ -37,7 +37,10 @@ public class ProjectManager {
 
     @Override
     public String toString() {
-        WriteData.writeDown("Data/StoreData/", projects);
         return new HashMap<>(projects).toString();
+    }
+
+    public void writeData(String path){
+        WriteData.writeDown(path, projects);
     }
 }
