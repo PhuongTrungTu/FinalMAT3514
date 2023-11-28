@@ -1,6 +1,7 @@
 import Components.Project;
 import Components.ProjectManager;
 import Components.Task;
+import Data.ReadData;
 import Model.ArrayList;
 import Service.components.Date;
 import Service.components.People;
@@ -11,6 +12,14 @@ public class Main {
     public static void main(String[] args) {
         // Init manager
         ProjectManager manager = ProjectManager.getInstance();
+
+//        String         filePath = "Data/data.json";
+//        ReadData.read(filePath, manager);
+//
+//        System.out.println(manager);
+//
+//        manager.writeData("Data/");
+
 
         // Repository of project
         Repository repo = new Repository("https://github.com/PhuongTrungTu/FinalMAT3514", "FinalMAT3514");
@@ -55,14 +64,12 @@ public class Main {
         second.addTask(task2);
         second.addTask(task3);
 
-
         manager.createNewProject(second);
-        // display
-        System.out.println(manager);
+
+//        manager.deleteProject(1);
 
         manager.writeData("Data/");
 
-
-
+        manager.display();
     }
 }

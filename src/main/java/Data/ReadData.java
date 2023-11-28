@@ -12,16 +12,6 @@ import java.io.IOException;
 
 public class ReadData {
 
-	public static void main(String[] args) {
-		String         filePath = "Data/data.json";
-		ProjectManager manager  = ProjectManager.getInstance();
-		read(filePath, manager);
-
-		System.out.println(manager);
-
-		manager.writeData("Data/Read");
-	}
-
 	public static void read(String filePath, ProjectManager manager) {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();

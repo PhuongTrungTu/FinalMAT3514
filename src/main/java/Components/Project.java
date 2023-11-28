@@ -94,4 +94,11 @@ public class Project {
         map.add("Label", label.mapping().toString());
         return map;
     }
+
+    public void display(){
+        for (int i = 0; i < tasks().size(); i++){
+            System.out.println("Task " + (i + 1) + ": " + tasks.get(i).getTittle());
+            System.out.println("End day: " + tasks.get(i).getEndDay());
+        }
+    }
 }
