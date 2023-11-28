@@ -5,11 +5,12 @@ import Model.HashMap;
 import Service.components.Label;
 import Service.components.Repository;
 import Service.components.Tittle;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Project {
     private Tittle tittle;
-    ArrayList<Task> tasks;
-    Label label;
+    ArrayList<Task> tasks = new ArrayList<>();
+    Label label = new Label();
     Repository repository = new Repository("", "");
     public Project() {
     }
@@ -44,6 +45,7 @@ public class Project {
         return tasks.get(index);
     }
 
+    @JsonProperty("tittle")
     public Tittle getTittle() {
         return tittle;
     }
@@ -52,6 +54,7 @@ public class Project {
         this.tittle = tittle;
     }
 
+    @JsonProperty("tasks")
     public ArrayList<Task> getTasks() {
         return tasks;
     }
@@ -60,6 +63,7 @@ public class Project {
         this.tasks = tasks;
     }
 
+    @JsonProperty("label")
     public Label getLabel() {
         return label;
     }
@@ -68,6 +72,7 @@ public class Project {
         this.label = label;
     }
 
+    @JsonProperty("repository")
     public Repository getRepository() {
         return repository;
     }

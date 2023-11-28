@@ -1,6 +1,7 @@
 package Service.components;
 
 import Model.HashMap;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Date implements Comparable<Date>, Components {
     private final int day;
@@ -75,6 +76,20 @@ public class Date implements Comparable<Date>, Components {
     @Override
     public String toString() {
         return String.format("%02d/%02d/%d", day, month, year);
+    }
+    @JsonProperty("day")
+    public int getDay() {
+        return day;
+    }
+
+    @JsonProperty("month")
+    public int getMonth() {
+        return month;
+    }
+
+    @JsonProperty("year")
+    public int getYear() {
+        return year;
     }
 
     @Override

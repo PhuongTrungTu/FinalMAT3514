@@ -1,5 +1,0 @@
-Dữ liệu sẽ được trình bày theo kiểu json để tường minh và dễ dàng hơn trong giao tiếp.
-
-Tất cả các components đều sẽ mapping trước khi hiển thị ra ngoài console. Key của các dữ liệu sẽ là dữ liệu tên của thuộc tính còn value là giá trí thực tế.
-Nếu trong trường hợp có nhiều thuộc tính cùng kiểu thì sẽ được đánh chỉ số và được cách ra 1 đoạn
-(Ví dụ: "Task 01" sẽ được hiểu là đối tượng này thuộc tính Task và được đánh số là 1 trong danh sách gồm nhiều task)

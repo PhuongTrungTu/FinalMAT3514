@@ -1,6 +1,7 @@
 package Service.components;
 
 import Model.HashMap;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Repository implements Components {
     String link = "";
@@ -14,6 +15,7 @@ public class Repository implements Components {
     public Repository() {
     }
 
+    @JsonProperty("link")
     public String getLink() {
         return link;
     }
@@ -22,6 +24,7 @@ public class Repository implements Components {
         this.link = link;
     }
 
+    @JsonProperty("tittle")
     public String getTittle() {
         return tittle;
     }

@@ -1,5 +1,7 @@
 package Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ArrayList<E> {
     private E[] containers = ((E[]) new Object[100]);
     private int size = 0;
@@ -82,10 +84,12 @@ public class ArrayList<E> {
         return containers[0].getClass().getSimpleName();
     }
 
+
     public void set(int index, E data){
         containers[index] = data;
     }
 
+    @JsonProperty("List")
     public E[] toArray(){
         E[] result = (E[]) new Object[size];
         System.arraycopy(containers , 0 , result , 0 , size);

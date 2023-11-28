@@ -1,11 +1,14 @@
 package Service.components;
 
 import Model.HashMap;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Label implements Components {
-    private String type;
+    private String type = "Default";
     private String description = "";
-    private Color color = new Color();
+
+    public Label() {
+    }
 
     public Label(String type) {
         this.type = type;
@@ -16,28 +19,23 @@ public class Label implements Components {
         this.description = description;
     }
 
+    @JsonProperty("type")
     public String getType() {
         return type;
     }
+
 
     public void setType(String type) {
         this.type = type;
     }
 
+    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     @Override

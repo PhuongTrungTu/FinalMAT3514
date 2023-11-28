@@ -5,15 +5,20 @@ import Model.HashMap;
 import Service.components.Date;
 import Service.components.Label;
 import Service.components.People;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 public class Task {
-    private String tittle;
-    private String description;
-    private Date endDay;
-    ArrayList<People> assignments;
+    private String tittle = "Task";
+    private String description = "";
+    private Date endDay = new Date(31,12,2023);
+    ArrayList<People> assignments = new ArrayList<>();
     Status status = Status.TODO;
-    ArrayList<Label> labels = new ArrayList<>();
+    Label labels = new Label();
+
+    public void setTitle(String title) {
+        this.tittle = title;
+    }
 
     public enum Status{
         TODO(-1),IN_PROCESS(0),DONE(1);
@@ -35,6 +40,9 @@ public class Task {
         }
     }
 
+    public Task() {
+    }
+
     public Task(String tittle , String description , Date endDay , ArrayList<People> assignments) {
         this.tittle = tittle;
         this.description = description;
@@ -42,6 +50,7 @@ public class Task {
         this.assignments = assignments;
     }
 
+    @JsonProperty("tittle")
     public String getTittle() {
         return tittle;
     }
@@ -50,6 +59,7 @@ public class Task {
         this.tittle = tittle;
     }
 
+    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
@@ -58,6 +68,7 @@ public class Task {
         this.description = description;
     }
 
+    @JsonProperty("endDay")
     public Date getEndDay() {
         return endDay;
     }
@@ -66,6 +77,7 @@ public class Task {
         this.endDay = endDay;
     }
 
+    @JsonProperty("assignments")
     public ArrayList<People> getAssignments() {
         return assignments;
     }
@@ -74,6 +86,7 @@ public class Task {
         this.assignments = assignments;
     }
 
+    @JsonProperty("status")
     public Status getStatus() {
         return status;
     }
@@ -82,11 +95,12 @@ public class Task {
         this.status = status;
     }
 
-    public ArrayList<Label> getLabels() {
+    @JsonProperty("label")
+    public Label getLabels() {
         return labels;
     }
 
-    public void setLabels(ArrayList<Label> labels) {
+    public void setLabels(Label labels) {
         this.labels = labels;
     }
 
@@ -101,7 +115,7 @@ public class Task {
         map.add("EndDay", endDay.mapping().toString());
         map.add("Assignments", new HashMap<>(assignments).toString());
         map.add("Status", status.toString());
-        map.add("Label", new HashMap<>(labels).toString());
+        map.add("Label", labels.toString());
         return map;
     }
 }

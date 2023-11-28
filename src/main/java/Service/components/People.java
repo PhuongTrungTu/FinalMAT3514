@@ -1,18 +1,18 @@
 package Service.components;
 
 import Model.HashMap;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class People implements Components{
     private String name;
-    private Date dob;
     private String id;
 
-    public People(String name , Date dob , String id) {
+    public People(String name, String id) {
         this.name = name;
-        this.dob = dob;
         this.id = id;
     }
 
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
@@ -21,14 +21,7 @@ public class People implements Components{
         this.name = name;
     }
 
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-
+    @JsonProperty("id")
     public String getId() {
         return id;
     }

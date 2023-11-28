@@ -1,12 +1,13 @@
 package Components;
 
-import Data.Write.WriteData;
+import Data.WriteData;
 import Model.ArrayList;
 import Model.HashMap;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProjectManager {
     private static ProjectManager instance;
-    protected ArrayList<Object> projects = new ArrayList<>();
+    protected ArrayList<Project> projects = new ArrayList<>();
     private ProjectManager(){
 
     }
@@ -29,9 +30,14 @@ public class ProjectManager {
         return projects.get(index);
     }
 
+    @JsonProperty("Projects")
+    protected ArrayList<Project> projectArrayList(){
+        return projects;
+    }
+
     @Override
     public String toString() {
-        WriteData.writeDown("Data/StoreData/", new HashMap<>(projects));
+        WriteData.writeDown("Data/StoreData/", projects);
         return new HashMap<>(projects).toString();
     }
 }
