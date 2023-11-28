@@ -1,0 +1,33 @@
+{
+  "Project 1":{
+    "Tittle":{
+      "Tittle":"First Project",
+      "Description":"Nothing"
+    },
+    "Task":{
+      "Task 1":{
+        "Tittle":"Task1",
+        "EndDay":{
+          "Day":26,
+          "Month":10,
+          "Year":2023},
+        "Assignments":{
+          "People 1":{
+            "Name":"Grizmo",
+            "Id":21000709},
+          "People 2":{
+            "Name":"Hoang Tu",
+            "Id":23000709
+          }
+        },
+        "Status":"TODO",
+        "Label":{
+
+        }
+      }
+    },"Label":{
+      "Type":"Test",
+      "Description":"Decription"
+    }
+  }
+}
