@@ -60,9 +60,9 @@ public class Main {
         // display
         System.out.println(manager);
 
+        manager.deleteProject(1);
+
         manager.writeData("Data/");
-
-
 
     }
 }

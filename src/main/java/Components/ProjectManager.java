@@ -26,6 +26,19 @@ public class ProjectManager {
         projects.add(project);
     }
 
+    public void deleteProject(String tittle){
+        for (int i = 0; i < projects.size(); i++){
+            if (projects.get(i).getTittle().getTittle().equalsIgnoreCase(tittle)){
+                projects.remove(i);
+            }
+        }
+    }
+
+
+    public void deleteProject(int index){
+        projects.remove(index);
+    }
+
     public Object getProject(int index){
         return projects.get(index);
     }
