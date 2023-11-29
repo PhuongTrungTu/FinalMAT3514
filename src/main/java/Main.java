@@ -10,6 +10,11 @@ import Service.components.Tittle;
 
 public class Main {
     public static void main(String[] args) {
+        Runtime runtime = Runtime.getRuntime();
+
+        long maxMemory = 4L * 1024 * 1024 * 1024; // 4 gigabytes in bytes
+        runtime.gc();
+
         // Init manager
         ProjectManager manager = ProjectManager.getInstance();
 

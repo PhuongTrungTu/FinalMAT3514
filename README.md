@@ -1,12 +1,3 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -24,9 +15,9 @@
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/PhuongTrungTu/FinalMAT3514/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/PhuongTrungTu/FinalMAT3514/issues">Request Feature</a>
   </p>
 </div>
 
@@ -80,31 +71,41 @@ project management environment.
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * [![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?&style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/)
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![SQL][JQuery.com]][JQuery-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+* [![SQL](https://img.shields.io/badge/SQL-%23018BBB.svg?&style=for-the-badge&logo=sql&logoColor=white)](JQuery-url)
+* [![Jackson ObjectMapper](https://img.shields.io/badge/Jackson_ObjectMapper-%23018BBB.svg?&style=for-the-badge)](https://github.com/FasterXML/jackson-databind)
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Before start lets make sure you set up ```Jackson ObjectMapper``` to process json file.
+You can read more about json process using ```Jackson ObjectMapper``` at [Intro to the Jackson ObjectMapper](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
 ### Prerequisites
+* Java
+Make sure that change memory setting to at least 4GB.
+Java version using in this project: ```java version: 19.0.2```
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+* Sql
+
+
+* Jackson Object mapper
+
+Let’s first add the following dependencies to the ```pom.xml```:
+```
+<dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.5</version>
+        </dependency>
+</dependencies>
+```
+
+This dependency will also transitively add the following libraries to the classpath:
+* jackson-annotations
+* jackson-core
+
+Always use the latest versions from the Maven central repository for jackson-databind.
 
 ### Installation
 
@@ -142,36 +143,28 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-  - [ ] Chinese
-  - [ ] Spanish
+- [x] All structure using in project
+- [x] Create components in Project
+- [x] Writing and reading json file
+- [x] Store data using ```Jackson ObjectMapper```
+- [x] Create new project
+- [x] Create new task for project
+- [x] Search project
+- [x] Delete project, delete task in project
+- [ ] Change status of task in project
+- [ ] Display in normal view (Table)
+- [ ] Display task of project in the more near end day of each task
+- [ ] The relationship between tasks
+- [ ] Pathfinding algorithm
+- [ ] Normal User interface
+- [ ] Priority Level of each task
+- [ ] Priority Level of each project
+- [ ] Database for store big data
+- [ ] Stack for operation (state at time k of manager)
+- [x] manager display in console in normal mode
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+See the [open issues](https://github.com/PhuongTrungTu/FinalMAT3514/issues) for a full list of proposed features (and known issues).
 
 
 <!-- LICENSE -->
@@ -179,20 +172,17 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Hoàng Tuấn Tú (Grizmo) - [Hoàng Tú](https://www.facebook.com/tuantu2610/) - hoangtuantu893@gmail.com
+
+Nguyễn Thị Hà Phương (Htmlexe) - [Nguyễn Phương](https://www.facebook.com/profile.php?id=100034060476971) - nguyenthihaphuong_t66@hus.edu.vn
+
+Nguyễn Thành Trung (Mlisfi) - [Nguyễn Thành Trung](https://www.facebook.com/nguyenthanhtrung25) - nguyenthanhtrung_t66@hus.edu.vn
 
 Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
