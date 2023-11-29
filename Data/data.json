@@ -1,76 +1,76 @@
 {
   "List": [
     {
-      "tittle": {
-        "tittle": "First Project",
-        "description": "Nothing"
+      "label": {
+        "description": "Description",
+        "type": "Test"
+      },
+      "repository": {
+        "link": "https://github.com/PhuongTrungTu/FinalMAT3514",
+        "tittle": "FinalMAT3514"
       },
       "tasks": {
-        "className": "Task",
         "List": [
           {
-            "tittle": "Task1",
+            "assignments": {
+              "List": [
+                {
+                  "id": "21000245",
+                  "name": "htmlexe"
+                },
+                {
+                  "id": "21000708",
+                  "name": "Mlisfi"
+                },
+                {
+                  "id": "23000709",
+                  "name": "Grizmo"
+                }
+              ],
+              "className": "People"
+            },
             "description": "Nothing for task1",
             "endDay": {
               "day": 26,
               "month": 10,
               "year": 2023
             },
-            "assignments": {
-              "className": "People",
-              "List": [
-                {
-                  "name": "htmlexe",
-                  "id": "21000245"
-                },
-                {
-                  "name": "Mlisfi",
-                  "id": "21000708"
-                },
-                {
-                  "name": "Grizmo",
-                  "id": "23000709"
-                }
-              ]
+            "label": {
+              "description": "",
+              "type": "Default"
             },
             "status": "TODO",
-            "label": {
-              "type": "Default",
-              "description": ""
-            }
+            "tittle": "Task1"
           },
           {
-            "tittle": "Task2",
+            "assignments": {
+              "List": [
+                {
+                  "id": "21000709",
+                  "name": "Grizmo"
+                }
+              ],
+              "className": "People"
+            },
             "description": "This is task2",
             "endDay": {
               "day": 31,
               "month": 12,
               "year": 2023
             },
-            "assignments": {
-              "className": "People",
-              "List": [
-                {
-                  "name": "Grizmo",
-                  "id": "21000709"
-                }
-              ]
+            "label": {
+              "description": "",
+              "type": "Default"
             },
             "status": "TODO",
-            "label": {
-              "type": "Default",
-              "description": ""
-            }
+            "tittle": "Task2"
           }
-        ]
+        ],
+        "className": "Task"
       },
-      "label": {
-        "type": "Test",
-        "description": "Description"
-      },
-      "repository": {
-        "link": "https://github.com/PhuongTrungTu/FinalMAT3514",
-        "tittle": "FinalMAT3514"
+      "tittle": {
+        "description": "Nothing",
+        "tittle": "First Project"
       }
     }
   ],
