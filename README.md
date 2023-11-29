@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> f606f8b8783c6edf63da50fa3b067af4c577a4be
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -175,8 +171,6 @@ Use this space to list resources you find helpful and would like to give credit 
 
 * [GNU GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/gpl-3.0.html)
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
