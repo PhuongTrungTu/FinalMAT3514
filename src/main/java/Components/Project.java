@@ -11,7 +11,8 @@ public class Project {
     private Tittle tittle;
     ArrayList<Task> tasks = new ArrayList<>();
     Label label = new Label();
-    Repository repository = new Repository("", "");
+    Repository repository = new Repository("" , "");
+
     public Project() {
     }
 
@@ -25,23 +26,23 @@ public class Project {
     public Project(Tittle tittle) {
         this.tittle = tittle;
         this.tasks = new ArrayList<>();
-        this.label = new Label("Test", "Description");
+        this.label = new Label("Test" , "Description");
         this.repository = new Repository();
     }
 
-    public void addTask(Task task){
+    public void addTask(Task task) {
         tasks.add(task);
     }
 
-    public void removeTask(Task task){
+    public void removeTask(Task task) {
         tasks.remove(task);
     }
 
-    public ArrayList<Task> tasks (){
+    public ArrayList<Task> tasks() {
         return tasks;
     }
 
-    public Task get(int index){
+    public Task get(int index) {
         return tasks.get(index);
     }
 
@@ -87,15 +88,15 @@ public class Project {
         return mapping().toString();
     }
 
-    public HashMap<String> mapping(){
+    public HashMap<String> mapping() {
         HashMap<String> map = new HashMap<>();
-        map.add("Tittle", tittle.mapping().toString());
-        map.add("Task", new HashMap<>(tasks).toString());
-        map.add("Label", label.mapping().toString());
+        map.add("Tittle" , tittle.mapping().toString());
+        map.add("Task" , new HashMap<>(tasks).toString());
+        map.add("Label" , label.mapping().toString());
         return map;
     }
 
-    public void display(){
+    public void display() {
         for (int i = 0; i < tasks().size(); i++){
             System.out.println("Task " + (i + 1) + ": " + tasks.get(i).getTittle());
             System.out.println("End day: " + tasks.get(i).getEndDay());
