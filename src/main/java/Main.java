@@ -73,8 +73,12 @@ public class Main {
 
 //        manager.deleteProject(1);
 
+        manager.deleteProject(1);
+
         manager.writeData("Data/");
 
+
         manager.display();
+
     }
 }
