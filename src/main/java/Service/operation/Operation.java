@@ -1,7 +1,6 @@
 package Service.operation;
 
-import Model.Stack;
+import java.util.Stack;
 
 public abstract class Operation {
-
 }
