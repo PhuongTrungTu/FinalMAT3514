@@ -10,43 +10,16 @@
   <p align="center">
     Mange your project for the best
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/PhuongTrungTu/FinalMAT3514/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/PhuongTrungTu/FinalMAT3514/issues">View Demo</a>
     ·
     <a href="https://github.com/PhuongTrungTu/FinalMAT3514/issues">Report Bug</a>
     ·
     <a href="https://github.com/PhuongTrungTu/FinalMAT3514/issues">Request Feature</a>
   </p>
 </div>
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -77,6 +50,7 @@ Here are a few examples.
 Before start lets make sure you set up ```Jackson ObjectMapper``` to process json file.
 You can read more about json process using ```Jackson ObjectMapper``` at [Intro to the Jackson ObjectMapper](https://www.baeldung.com/jackson-object-mapper-tutorial)
 
+
 ### Prerequisites
 * Java
 Make sure that change memory setting to at least 4GB.
@@ -106,18 +80,20 @@ Always use the latest versions from the Maven central repository for jackson-dat
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- ROADMAP -->
-## Roadmap
+## Future Plans
+
+We have an exciting roadmap for the future development of this project. 
+Here are some of the key features and improvements we plan to implement:
+
+### Subject Roadmap
 
 - [x] All structure using in project
 - [x] Create components in Project
@@ -139,6 +115,11 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Stack for operation (state at time k of manager)
 - [x] manager display in console in normal mode
 
+### After subject
+- Mobile, web version
+- Graphics User interface
+- Sharing Projects Online with User Accounts
+- AI suggesting for roadmap, solution, reference of project
 
 See the [open issues](https://github.com/PhuongTrungTu/FinalMAT3514/issues) for a full list of proposed features (and known issues).
 
@@ -167,21 +148,3 @@ Use this space to list resources you find helpful and would like to give credit 
 
 * [GNU GENERAL PUBLIC LICENSE](https://www.gnu.org/licenses/gpl-3.0.html)
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
