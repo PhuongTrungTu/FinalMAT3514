@@ -31,7 +31,11 @@ public class Vertex<K, E> {
 
 	@Override
 	public String toString() {
-		return graphNode + ":" + neighbors;
+		StringBuilder result = new StringBuilder(graphNode + "" );
+		for (Vertex<K, E> key: neighbors.keySet()){
+			result.append(key).append(" ");
+		}
+		return result.toString();
 	}
 
 

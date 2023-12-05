@@ -106,10 +106,10 @@ Here are some of the key features and improvements we plan to implement:
 - [x] Change status of task in project
 - [ ] Display in normal view (Table)
 - [ ] Display task of project in the more near end day of each task
-- [ ] The relationship between tasks
+- [x] The relationship between tasks
 - [ ] Pathfinding algorithm
 - [ ] Normal User interface
-- [ ] Priority Level of each task
+- [x] Priority Level of each task
 - [ ] Priority Level of each project
 - [ ] Database for store big data
 - [ ] Stack for operation (state at time k of manager)

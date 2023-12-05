@@ -1,5 +1,6 @@
 package Model;
 
+import Components.Task;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Iterator;
@@ -99,6 +100,36 @@ public class ArrayList<E> implements Iterable<E> {
     public E[] toArray(){
         E[] result = (E[]) new Object[size];
         System.arraycopy(containers , 0 , result , 0 , size);
+        return result;
+    }
+
+    public boolean contain(E data){
+        for (int i = 0; i < size; i++){
+            if (containers[i].equals(data)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ArrayList<Task> copy(ArrayList<Task> array){
+        return new ArrayList<>(array.toArray());
+    }
+
+    private void add(Object data, boolean check){
+        if (size >= containers.length - 5){
+            expand();
+        }
+        containers[size] = (E) data;
+        size++;
+    }
+
+    public static ArrayList<?> copy(ArrayList<?> array, int start){
+        ArrayList<?> result = new ArrayList<>();
+        for (int i = start;i < array.size ;i++){
+            result.add(array.get(i), true);
+        }
+
         return result;
     }
 

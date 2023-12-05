@@ -2,13 +2,20 @@ package Components;
 
 import Data.WriteData;
 import Model.ArrayList;
+import Model.BinarySearchingTree;
 import Model.HashMap;
-import Service.components.*;
+import Service.components.Components;
+import Service.components.Repository;
+import Service.components.Tittle;
+import Service.components.Label;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.awt.*;
 
 public class ProjectManager {
     private static ProjectManager instance;
     protected ArrayList<Project> projects = new ArrayList<>();
+    private final BinarySearchingTree<Tittle, Project> tree = new BinarySearchingTree<>();
     private ProjectManager(){
 
     }
@@ -22,9 +29,10 @@ public class ProjectManager {
     public void createNewProject(Project project){
         projects.add(project);
     }
-    public void createNewProject(){
-        Project project = new Project();
+    public void createNewProject(Tittle tittle){
+        Project project = new Project(tittle);
         projects.add(project);
+        tree.insert(project.getTittle(), project);
     }
 
     public void deleteProject(String tittle){

@@ -28,10 +28,25 @@ public class BinarySearchingTree<K extends Comparable<K>, E> {
     public TreeNode<K, E> root(){
         return root;
     }
+    public E search(K key){
+        return search(key, root);
+    }
+
+    public E search (K key, TreeNode<K, E> root){
+        if (root == null){
+            return null;
+        }if (key.compareTo(root.getKey()) < 0){
+            search(key, root.getLeft());
+        }else if(key.compareTo(root.getKey()) > 0){
+            search(key, root.getRight());
+        }return root.getData();
+    }
+
 
     public boolean search(TreeNode<K, E> node){
         return search(root, node);
     }
+
 
     private boolean search(TreeNode<K, E> root, TreeNode<K, E> node){
         if (root == null) {

@@ -27,4 +27,9 @@ public class Sort{
 		Arrays.sort(data, Comparator.comparingInt(Task::getTime));
 		return new ArrayList<>(data);
 	}
+
+	public ArrayList<Task> sortByDegree(){
+		Arrays.sort(data, Comparator.comparing(Task:: getDegree));
+		return new ArrayList<>(data);
+	}
 }

@@ -3,6 +3,10 @@ package Service.components;
 public class Major {
 	private final String MAJOR;
 	private final int LEVEL;
+	public Major(){
+		this.LEVEL = -1;
+		this.MAJOR = "All";
+	}
 	public Major(int level){
 		this.LEVEL = level;
 		if (level == 1){

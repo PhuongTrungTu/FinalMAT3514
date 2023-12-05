@@ -15,9 +15,10 @@ public class Task implements Comparable<Task> {
     ArrayList<People> assignments = new ArrayList<>();
     Status status = Status.TODO;
     Label labels = new Label();
+    Major majorLabel = new Major();
     private int time = 1;
     Set<Task> dependentTasks = new HashSet<>();
-
+    int degree;
 
     public enum Status{
         TODO(-1),IN_PROCESS(0),DONE(1);
@@ -56,6 +57,19 @@ public class Task implements Comparable<Task> {
         this.time = time;
     }
 
+    public Task(Tittle tittle , Date startDay , Date endDay , ArrayList<People> assignments , Status status , Label labels , Major majorLabel , int time , Set<Task> dependentTasks , int degree) {
+        this.tittle = tittle;
+        this.startDay = startDay;
+        this.endDay = endDay;
+        this.assignments = assignments;
+        this.status = status;
+        this.labels = labels;
+        this.majorLabel = majorLabel;
+        this.time = time;
+        this.dependentTasks = dependentTasks;
+        this.degree = degree;
+    }
+
     @JsonProperty("tittle")
     public Tittle getTittle() {
         return tittle;
@@ -81,16 +95,49 @@ public class Task implements Comparable<Task> {
     }
 
     public void setAssignments(ArrayList<People> assignments) {
-        this.assignments = assignments;
+        this.assignments = new ArrayList<>();
+        ArrayList<People> unSuitable = new ArrayList<>();
+        for(People people: assignments){
+            if (people.getMajors().contain(majorLabel) || people.getMajors().contain(new Major())){
+                assignments.add(people);
+            }else{
+                unSuitable.add(people);
+            }
+        }
+        System.out.println("These people can't assign this task because they don't have suitable major!");
+        System.out.println(unSuitable);
     }
+
+    public void setAssignments(ArrayList<People> assignments, boolean check) {
+        this.assignments = new ArrayList<>();
+        ArrayList<People> unSuitable = new ArrayList<>();
+        for(People people: assignments){
+            if (people.getMajors().contain(majorLabel) || check || people.getMajors().contain(new Major())){
+                assignments.add(people);
+            }else{
+                unSuitable.add(people);
+            }
+        }
+        if (!check){
+            System.out.println("These people can't assign this task because they don't have suitable major!");
+            System.out.println(unSuitable);
+        }
+    }
+
 
     @JsonProperty("status")
     public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(int change) {
+        if (change == 0){
+            this.status = Status.IN_PROCESS;
+        }else if (change < 0){
+            this.status = Status.TODO;
+        }else{
+            this.status = Status.DONE;
+        }
     }
 
     @JsonProperty("label")
@@ -136,6 +183,22 @@ public class Task implements Comparable<Task> {
     @Override
     public int compareTo(Task task) {
         return task.getTittle().getTittle().compareTo(tittle.getTittle());
+    }
+
+    public Major getMajorLabel() {
+        return majorLabel;
+    }
+
+    public void setMajorLabel(Major majorLabel) {
+        this.majorLabel = majorLabel;
+    }
+
+    public int getDegree() {
+        return degree;
+    }
+
+    public void setDegree(int degree) {
+        this.degree = degree;
     }
 
     @Override

@@ -1,6 +1,9 @@
 package Components;
 
-import Model.*;
+import Model.Graph;
+import Model.ArrayList;
+import Model.BinarySearchingTree;
+import Model.HashMap;
 import Model.Node.Vertex;
 import Service.Sort;
 import Service.components.*;
@@ -138,10 +141,37 @@ public class Project {
         tasks = sort.sortByTime();
     }
 
+    public void sortByDegree(){
+        tasks = sort.sortByDegree();
+    }
+
+    public void roadMapDisplayStyle(){
+        sortByDay();
+        int index = 0;
+        for (int i = 0; i < getTasks().size(); i++){
+            if(tasks.get(i).getEndDay().compareTo(Date.today()) >= 0){
+                index = i;
+                break;
+            }
+        }
+
+        ArrayList<?> result = ArrayList.copy(tasks, index);
+        System.out.println(tasks);
+    }
+
+    public void degreeDisplayStyle(){
+        sortByDegree();
+        System.out.println(tasks);
+    }
+
     public void display() {
         for (int i = 0; i < tasks().size(); i++){
             System.out.println("Task " + (i + 1) + ": " + tasks.get(i).getTittle());
             System.out.println("End day: " + tasks.get(i).getEndDay());
         }
+    }
+
+    public Task search(String tittle){
+        return BST.search(new Tittle(tittle, ""));
     }
 }

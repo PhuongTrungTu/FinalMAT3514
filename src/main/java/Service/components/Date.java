@@ -3,6 +3,8 @@ package Service.components;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
+
 public record Date(int day , int month , int year) implements Comparable<Date>, Components {
     public static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
@@ -40,6 +42,11 @@ public record Date(int day , int month , int year) implements Comparable<Date>, 
 
     public static long calculateDaysBetween(Date startDate , Date endDate) {
         return convertDateToNumber(endDate) - convertDateToNumber(startDate);
+    }
+
+    public static Date today(){
+        LocalDate today = LocalDate.now();
+        return new Date(today.getDayOfMonth(), today.getMonthValue(), today.getYear());
     }
 
     public long dayBetween(Date endDate) {
