@@ -1,15 +1,27 @@
 package Service.components;
 
+import Model.ArrayList;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class People implements Components{
     private String name;
     private String id;
+    private ArrayList<Major> majors = new ArrayList<>();
 
     public People(String name, String id) {
         this.name = name;
         this.id = id;
+    }
+
+    public People(String name , String id , ArrayList<Major> majors) {
+        this.name = name;
+        this.id = id;
+        this.majors = majors;
+    }
+
+    public ArrayList<Major> getMajors() {
+        return majors;
     }
 
     @JsonProperty("name")

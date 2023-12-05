@@ -1,24 +1,23 @@
 package Components;
 
-import Model.ArrayList;
-import Model.HashMap;
-import Service.components.Date;
-import Service.components.Label;
-import Service.components.People;
+import Model.*;
+import Service.components.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashSet;
+import java.util.Set;
 
-public class Task {
-    private String tittle = "Task";
-    private String description = "";
+
+public class Task implements Comparable<Task> {
+    private Tittle tittle = new Tittle("New Task", "");
+    private Date startDay = new Date(1,1,2023);
     private Date endDay = new Date(31,12,2023);
     ArrayList<People> assignments = new ArrayList<>();
     Status status = Status.TODO;
     Label labels = new Label();
+    private int time = 1;
+    Set<Task> dependentTasks = new HashSet<>();
 
-    public void setTitle(String title) {
-        this.tittle = title;
-    }
 
     public enum Status{
         TODO(-1),IN_PROCESS(0),DONE(1);
@@ -43,30 +42,29 @@ public class Task {
     public Task() {
     }
 
-    public Task(String tittle , String description , Date endDay , ArrayList<People> assignments) {
+    public Task(Tittle tittle , Date startDay , Date endDay , ArrayList<People> assignments) {
         this.tittle = tittle;
-        this.description = description;
+        this.startDay = startDay;
         this.endDay = endDay;
         this.assignments = assignments;
     }
 
+    public Task(Tittle tittle , Date startDay , ArrayList<People> assignments , int time) {
+        this.tittle = tittle;
+        this.startDay = startDay;
+        this.assignments = assignments;
+        this.time = time;
+    }
+
     @JsonProperty("tittle")
-    public String getTittle() {
+    public Tittle getTittle() {
         return tittle;
     }
 
-    public void setTittle(String tittle) {
+    public void setTittle(Tittle tittle) {
         this.tittle = tittle;
     }
 
-    @JsonProperty("description")
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     @JsonProperty("endDay")
     public Date getEndDay() {
@@ -104,6 +102,42 @@ public class Task {
         this.labels = labels;
     }
 
+    public Set<Task> getDependentTasks() {
+        return dependentTasks;
+    }
+
+    public void setDependentTasks(Set<Task> dependentTasks) {
+        this.dependentTasks = dependentTasks;
+    }
+
+    public Date getStartDay() {
+        return startDay;
+    }
+
+    public void setStartDay(Date startDay) {
+        this.startDay = startDay;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public void setDependentTasks(Task task){
+        dependentTasks.add(task);
+    }
+
+    public void deleteDependent(Task task){
+        dependentTasks.remove(task);
+    }
+    @Override
+    public int compareTo(Task task) {
+        return task.getTittle().getTittle().compareTo(tittle.getTittle());
+    }
+
     @Override
     public String toString() {
         return mapping().toString();
@@ -111,7 +145,7 @@ public class Task {
 
     public HashMap<String> mapping(){
         HashMap<String> map = new HashMap<>();
-        map.add("Tittle", tittle);
+        map.add("Tittle", tittle.toString());
         map.add("EndDay", endDay.mapping().toString());
         map.add("Assignments", new HashMap<>(assignments).toString());
         map.add("Status", status.toString());

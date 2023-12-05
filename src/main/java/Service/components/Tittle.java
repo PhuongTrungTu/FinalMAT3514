@@ -3,7 +3,7 @@ package Service.components;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Tittle implements Components{
+public class Tittle implements Components, Comparable<Tittle> {
 	private String tittle;
 	private String description;
 
@@ -43,6 +43,8 @@ public class Tittle implements Components{
 		return map;
 	}
 
-
-
+	@Override
+	public int compareTo(Tittle o) {
+		return tittle.compareTo(o.getTittle());
+	}
 }

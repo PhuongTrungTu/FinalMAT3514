@@ -64,8 +64,7 @@ public class ReadData {
 		}
 
 		Task task = new Task();
-		task.setTitle(title);
-		task.setDescription(description);
+		task.setTittle(new Tittle(title, description));
 		task.setEndDay(endDay);
 		task.setAssignments(assignments);
 

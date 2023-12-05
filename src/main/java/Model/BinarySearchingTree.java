@@ -5,10 +5,10 @@ import Model.Node.TreeNode;
 public class BinarySearchingTree<K extends Comparable<K>, E> {
     private TreeNode<K, E>  root;
 
-
     private int compare(TreeNode<K, E> node1 , TreeNode<K, E> node2){
         return node1.getKey().compareTo(node2.getKey());
     }
+
     public void insert(K key, E data){
         root = insert(root, key, data);
     }
@@ -61,6 +61,10 @@ public class BinarySearchingTree<K extends Comparable<K>, E> {
 
     public TreeNode<K, E> delete(TreeNode<K, E> node){
         return deleteInSubTree(root, node);
+    }
+
+    public TreeNode<K, E> delete(K key, E data){
+        return deleteInSubTree(root, new TreeNode<>(key, data));
     }
 
     private TreeNode<K, E> deleteInSubTree(TreeNode<K, E> root, TreeNode<K, E> node) {

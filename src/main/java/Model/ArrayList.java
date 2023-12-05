@@ -2,7 +2,9 @@ package Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ArrayList<E> {
+import java.util.Iterator;
+
+public class ArrayList<E> implements Iterable<E> {
     private E[] containers = ((E[]) new Object[100]);
     private int size = 0;
 
@@ -48,10 +50,14 @@ public class ArrayList<E> {
                 i--;
             }
         }
-        size--;
     }
 
     public void remove(int index){
+        if ((index >= size || index < 0) && getClassName().equalsIgnoreCase("Integer")){
+            remove(index);
+        }else if((index >= size || index < 0)){
+            throw new IndexOutOfBoundsException();
+        }
         for (int i = index; i < size; i++){
             containers[i] = containers[i + 1];
         }
@@ -96,4 +102,26 @@ public class ArrayList<E> {
         return result;
     }
 
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private final E[] array = toArray();
+            private int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < size;
+            }
+
+            @Override
+            public E next() {
+                index++;
+                return array[index - 1];
+            }
+        };
+    }
 }

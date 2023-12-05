@@ -1,19 +1,25 @@
 package Components;
 
-import Model.ArrayList;
-import Model.HashMap;
-import Service.components.Label;
-import Service.components.Repository;
-import Service.components.Tittle;
+import Model.*;
+import Model.Node.Vertex;
+import Service.Sort;
+import Service.components.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Project {
     private Tittle tittle;
+    private Graph<Tittle, Task> graph;
+    private BinarySearchingTree<Tittle, Task> BST = new BinarySearchingTree<>();
     ArrayList<Task> tasks = new ArrayList<>();
     Label label = new Label();
     Repository repository = new Repository("" , "");
+    private final Vertex<Tittle, Task> FINISH_TASK = new Vertex<>(new Tittle("End", ""), new Task());
 
     public Project() {
+        Tittle tittle1 = new Tittle("End", "");
+        FINISH_TASK.getNode().setKey(tittle1);
+        FINISH_TASK.getNode().getData().setTittle(tittle1);
+        FINISH_TASK.getNode().getData().setTime(0);
     }
 
     public Project(Tittle tittle , ArrayList<Task> tasks , Label label , Repository repository) {
@@ -32,10 +38,33 @@ public class Project {
 
     public void addTask(Task task) {
         tasks.add(task);
+        Vertex<Tittle, Task> u = new Vertex<>(task.getTittle(), task);
+        graph.addVertex(u);
+        graph.addEdge(u, FINISH_TASK);
+        BST.insert(task.getTittle(), task);
+    }
+
+    public void addDependentTask(int l, int r){
+        tasks.get(l).setDependentTasks(tasks.get(r));
+        tasks.get(l).getDependentTasks().remove(FINISH_TASK);
+        Vertex<Tittle, Task> u = new Vertex<>(tasks.get(r).getTittle(), tasks.get(r));
+        addDependentTask(u, FINISH_TASK);
+    }
+
+    public void addDependentTask(Vertex<Tittle, Task> u, Vertex<Tittle, Task> v){
+        u.addEdge(v, u.getNode().getData().getTime());
+    }
+
+    public void deleteDependentTask(int id, int dependent){
+        tasks.get(id).deleteDependent(tasks.get(dependent));
     }
 
     public void removeTask(Task task) {
         tasks.remove(task);
+        BST.delete(task.getTittle(), task);
+        for (int i = 0; i < tasks.size(); i++){
+            tasks.get(i).dependentTasks.remove(task);
+        }
     }
 
     public ArrayList<Task> tasks() {
@@ -94,6 +123,19 @@ public class Project {
         map.add("Task" , new HashMap<>(tasks).toString());
         map.add("Label" , label.mapping().toString());
         return map;
+    }
+
+    private final Sort sort = new Sort(tasks);
+    public void sortByTittle(){
+        tasks = sort.sort();
+    }
+
+    public void sortByDay(){
+        tasks = sort.sortByDay();
+    }
+
+    public void sortByTime(){
+        tasks = sort.sortByTime();
     }
 
     public void display() {

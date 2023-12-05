@@ -103,7 +103,7 @@ Here are some of the key features and improvements we plan to implement:
 - [x] Create new task for project
 - [x] Search project
 - [x] Delete project, delete task in project
-- [ ] Change status of task in project
+- [x] Change status of task in project
 - [ ] Display in normal view (Table)
 - [ ] Display task of project in the more near end day of each task
 - [ ] The relationship between tasks
