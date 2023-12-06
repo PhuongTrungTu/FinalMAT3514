@@ -2,7 +2,6 @@ package Components;
 
 import Model.Graph;
 import Model.ArrayList;
-import Model.BinarySearchingTree;
 import Model.HashMap;
 import Model.Node.Vertex;
 import Service.Sort;
@@ -10,9 +9,8 @@ import Service.components.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Project {
-    private Tittle tittle;
-    private Graph<Tittle, Task> graph;
-    private BinarySearchingTree<Tittle, Task> BST = new BinarySearchingTree<>();
+    private Tittle tittle = new Tittle("");
+    private Graph<Tittle, Task> graph = new Graph<>();
     ArrayList<Task> tasks = new ArrayList<>();
     Label label = new Label();
     Repository repository = new Repository("" , "");
@@ -35,28 +33,55 @@ public class Project {
     public Project(Tittle tittle) {
         this.tittle = tittle;
         this.tasks = new ArrayList<>();
-        this.label = new Label("Test" , "Description");
+        this.label = new Label();
         this.repository = new Repository();
     }
 
+    public void createNewTask(int type){
+        Task task = new Task(type);
+        addTask(task);
+    }
+
+    public void createNewTask(String tittle){
+        Task task = new Task();
+        task.setTittle(new Tittle(tittle));
+        addTask(task);
+    }
+
     public void addTask(Task task) {
+        task.addDependentTask(FINISH_TASK.getNode().getData());
         tasks.add(task);
         Vertex<Tittle, Task> u = new Vertex<>(task.getTittle(), task);
         graph.addVertex(u);
         graph.addEdge(u, FINISH_TASK);
-        BST.insert(task.getTittle(), task);
     }
 
     public void addDependentTask(int l, int r){
-        tasks.get(l).setDependentTasks(tasks.get(r));
-        tasks.get(l).getDependentTasks().remove(FINISH_TASK);
-        Vertex<Tittle, Task> u = new Vertex<>(tasks.get(r).getTittle(), tasks.get(r));
-        addDependentTask(u, FINISH_TASK);
+        addDependentTask(tasks.get(l), tasks.get(r));
+    }
+
+    public void addDependentTask(String task1, String task2){
+        addDependentTask( search(task1),  search(task2));
     }
 
     public void addDependentTask(Vertex<Tittle, Task> u, Vertex<Tittle, Task> v){
         u.addEdge(v, u.getNode().getData().getTime());
     }
+
+    public void addDependentTask(Task task1, Task task2){
+        if (!tasks.contain(task1) && !tasks.contain(task2)){
+            throw new IllegalArgumentException(task1.getTittle().getTittle() + ", " + task2.getTittle() + "is not in project!");
+        } else if (!tasks.contain(task1)){
+            addTask(task1);
+        } else if (! tasks.contain(task2)){
+            addTask(task2);
+        }
+        task1.addDependentTask(task2);
+        task1.getDependentTasks().remove(FINISH_TASK);
+        Vertex<Tittle, Task> u = new Vertex<>(task2.getTittle(), task2);
+        addDependentTask(u, FINISH_TASK);
+    }
+
 
     public void deleteDependentTask(int id, int dependent){
         tasks.get(id).deleteDependent(tasks.get(dependent));
@@ -64,7 +89,6 @@ public class Project {
 
     public void removeTask(Task task) {
         tasks.remove(task);
-        BST.delete(task.getTittle(), task);
         for (int i = 0; i < tasks.size(); i++){
             tasks.get(i).dependentTasks.remove(task);
         }
@@ -128,21 +152,20 @@ public class Project {
         return map;
     }
 
-    private final Sort sort = new Sort(tasks);
     public void sortByTittle(){
-        tasks = sort.sort();
+        tasks = Sort.sort(tasks);
     }
 
     public void sortByDay(){
-        tasks = sort.sortByDay();
+        tasks = Sort.sortByDay(tasks);
     }
 
     public void sortByTime(){
-        tasks = sort.sortByTime();
+        tasks = Sort.sortByTime(tasks);
     }
 
     public void sortByDegree(){
-        tasks = sort.sortByDegree();
+        tasks = Sort.sortByDegree(tasks);
     }
 
     public void roadMapDisplayStyle(){
@@ -166,12 +189,27 @@ public class Project {
 
     public void display() {
         for (int i = 0; i < tasks().size(); i++){
-            System.out.println("Task " + (i + 1) + ": " + tasks.get(i).getTittle());
-            System.out.println("End day: " + tasks.get(i).getEndDay());
+            System.out.println("Task: " + (i + 1));
+            tasks.get(i).display();
+            System.out.println("______________________");
         }
     }
 
     public Task search(String tittle){
-        return BST.search(new Tittle(tittle, ""));
+        for (int i = 0; i < tasks.size(); i++){
+            if (tasks.get(i).getTittle().getTittle().equalsIgnoreCase(tittle)){
+                return tasks.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Task search(Tittle tittle){
+        for (int i = 0; i < tasks.size(); i++){
+            if (tasks.get(i).getTittle().equals(tittle)){
+                return tasks.get(i);
+            }
+        }
+        return null;
     }
 }

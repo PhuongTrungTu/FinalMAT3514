@@ -2,7 +2,6 @@ package Components;
 
 import Data.WriteData;
 import Model.ArrayList;
-import Model.BinarySearchingTree;
 import Model.HashMap;
 import Service.components.Components;
 import Service.components.Repository;
@@ -10,12 +9,9 @@ import Service.components.Tittle;
 import Service.components.Label;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.awt.*;
-
 public class ProjectManager {
     private static ProjectManager instance;
     protected ArrayList<Project> projects = new ArrayList<>();
-    private final BinarySearchingTree<Tittle, Project> tree = new BinarySearchingTree<>();
     private ProjectManager(){
 
     }
@@ -32,7 +28,6 @@ public class ProjectManager {
     public void createNewProject(Tittle tittle){
         Project project = new Project(tittle);
         projects.add(project);
-        tree.insert(project.getTittle(), project);
     }
 
     public void deleteProject(String tittle){
@@ -48,8 +43,26 @@ public class ProjectManager {
         projects.remove(index);
     }
 
-    public Object getProject(int index){
+    public Project getProject(int index){
         return projects.get(index);
+    }
+
+    public Project getProject(Tittle tittle){
+        for (int i = 0; i < projects.size(); i++){
+            if (projects.get(i).getTittle().equals(tittle)){
+                return projects.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Project getProject(String tittle){
+        for (int i = 0; i < projects.size(); i++){
+            if (projects.get(i).getTittle().getTittle().equalsIgnoreCase(tittle)){
+                return projects.get(i);
+            }
+        }
+        return null;
     }
 
     @JsonProperty("Projects")
@@ -97,7 +110,7 @@ public class ProjectManager {
 
     public void display(){
         for (int i = 0 ; i < projects.size(); i ++){
-            System.out.println("Project " + (i + 1) + ": " + projects.get(i).getTittle());
+            System.out.println("Project " + (i + 1) + ": " + projects.get(i).getTittle().getTittle());
             System.out.println("Number task: " + projects.get(i).tasks().size());
             projects.get(i).display();
             System.out.println();

@@ -1,6 +1,8 @@
 package Model;
 
 import Components.Task;
+import Service.components.Components;
+import Service.components.Tittle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Iterator;
@@ -116,7 +118,7 @@ public class ArrayList<E> implements Iterable<E> {
         return new ArrayList<>(array.toArray());
     }
 
-    private void add(Object data, boolean check){
+    private void addPrivate(Object data){
         if (size >= containers.length - 5){
             expand();
         }
@@ -124,20 +126,17 @@ public class ArrayList<E> implements Iterable<E> {
         size++;
     }
 
+
     public static ArrayList<?> copy(ArrayList<?> array, int start){
         ArrayList<?> result = new ArrayList<>();
         for (int i = start;i < array.size ;i++){
-            result.add(array.get(i), true);
+            result.addPrivate(array.get(i));
         }
 
         return result;
     }
 
-    /**
-     * Returns an iterator over elements of type {@code T}.
-     *
-     * @return an Iterator.
-     */
+
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {

@@ -9,14 +9,14 @@ import java.util.Set;
 
 
 public class Task implements Comparable<Task> {
-    private Tittle tittle = new Tittle("New Task", "");
-    private Date startDay = new Date(1,1,2023);
-    private Date endDay = new Date(31,12,2023);
+    private Tittle tittle = new Tittle();
+    private Date startDay = Date.today();
+    private Date endDay = Date.today();
     ArrayList<People> assignments = new ArrayList<>();
     Status status = Status.TODO;
     Label labels = new Label();
     Major majorLabel = new Major();
-    private int time = 1;
+    private int time = 0;
     Set<Task> dependentTasks = new HashSet<>();
     int degree;
 
@@ -41,6 +41,10 @@ public class Task implements Comparable<Task> {
     }
 
     public Task() {
+    }
+
+    public Task(int level){
+        labels = new Label(level);
     }
 
     public Task(Tittle tittle , Date startDay , Date endDay , ArrayList<People> assignments) {
@@ -157,6 +161,10 @@ public class Task implements Comparable<Task> {
         this.dependentTasks = dependentTasks;
     }
 
+    public void addDependentTask(Task task){
+        dependentTasks.add(task);
+    }
+
     public Date getStartDay() {
         return startDay;
     }
@@ -182,7 +190,7 @@ public class Task implements Comparable<Task> {
     }
     @Override
     public int compareTo(Task task) {
-        return task.getTittle().getTittle().compareTo(tittle.getTittle());
+        return task.getTittle().compareTo(tittle);
     }
 
     public Major getMajorLabel() {
@@ -214,5 +222,13 @@ public class Task implements Comparable<Task> {
         map.add("Status", status.toString());
         map.add("Label", labels.toString());
         return map;
+    }
+    public void display(){
+        System.out.println("Tittle: " + tittle.getTittle() );
+        System.out.println("Start day: " + getStartDay());
+        System.out.println("End day: " + getEndDay());
+        System.out.println("Assign: " + getAssignments());
+        System.out.println("Status: " + getStatus());
+        System.out.println("Label: " + labels.getType());
     }
 }

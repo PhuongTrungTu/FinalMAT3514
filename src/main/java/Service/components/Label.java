@@ -4,10 +4,20 @@ import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Label implements Components {
-    private String type = "Default";
+    private String type = "Untyped";
     private String description = "";
 
     public Label() {
+    }
+    final String[] TYPES = {"Back end", "Front End", "Testing",
+            "Design", "Marketing", "Development", "Untyped"};
+    public Label(int level){
+        if (level < 0 || level >= TYPES.length){
+            level = TYPES.length - 1;
+        }
+
+        type = TYPES[level];
+        description = "This is description for " + type;
     }
 
     public Label(String type) {
