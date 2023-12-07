@@ -18,8 +18,8 @@ public class Project {
     private ArrayList<Task> tasks = new ArrayList<>();
     private Label label = new Label();
     private Repository repository = new Repository("" , "");
-
     private Map<Task,Map<Task, Integer>> graph = new HashMap<>();
+    private int maxTime = 0;
 
     public Project() {
     }
@@ -74,8 +74,24 @@ public class Project {
 
         task1.addDependentTask(task2);
     }
-    // Phương thức để tìm đường găng có tổng thời gian lớn nhất
+
+    public void update(){
+        for (int i = 0; i < tasks.size(); i++){
+            tasks.get(i).updateProgress();
+        }
+    }
+
+    public int maxDay(){
+        ArrayList<Task> tasks = findLongestPath();
+        int sum = 0;
+        for (int i = 0; i < tasks.size(); i++){
+            sum += tasks.get(i).getTime();
+        }
+        return sum;
+    }
     public ArrayList<Task> findLongestPath() {
+        update();
+
         // Sử dụng một map để lưu trữ tổng thời gian tốt nhất cho mỗi task
         Map<Task, Integer> maxTimeMap = new HashMap<>();
 

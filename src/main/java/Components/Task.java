@@ -53,6 +53,15 @@ public class Task implements Comparable<Task>,Cloneable  {
         this.assignments = assignments;
     }
 
+    public Task(Tittle tittle , Date startDay , Label labels , Major majorLabel , int time) {
+        this.tittle = tittle;
+        this.startDay = startDay;
+        this.labels = labels;
+        this.majorLabel = majorLabel;
+        endDay = new Date(startDay.day() + time, startDay.month(), startDay.year());
+        this.time = time;
+    }
+
     public Task(Tittle tittle , Date startDay , ArrayList<People> assignments , int time) {
         this.tittle = tittle;
         this.startDay = startDay;
@@ -95,6 +104,14 @@ public class Task implements Comparable<Task>,Cloneable  {
     @JsonProperty("assignments")
     public ArrayList<People> getAssignments() {
         return assignments;
+    }
+
+    public void addAssignMent(People people, boolean unsuitalbe){
+        if ((people.getMajors().contain(majorLabel) || people.getMajors().contain(new Major())) || unsuitalbe){
+            assignments.add(people);
+        }else{
+            System.out.println("Can't assign " + tittle.getTittle() + " for " + people.getName());
+        }
     }
 
     public void setAssignments(ArrayList<People> assignments) {
@@ -162,9 +179,9 @@ public class Task implements Comparable<Task>,Cloneable  {
         return result;
     }
 
-
     public void setDependentTasks(ArrayList<Task> dependentTasks) {
         this.dependentTasks = dependentTasks;
+        updateProgress();
     }
 
     public void addDependentTask(Task task){
@@ -177,6 +194,7 @@ public class Task implements Comparable<Task>,Cloneable  {
 
     public void setStartDay(Date startDay) {
         this.startDay = startDay;
+        updateProgress();
     }
 
     public int getTime() {
@@ -185,10 +203,12 @@ public class Task implements Comparable<Task>,Cloneable  {
 
     public void setTime(int time) {
         this.time = time;
+        endDay = new Date(startDay.day() + time, startDay.month(), startDay.year());
     }
 
     public void setDependentTasks(Task task){
         dependentTasks.add(task);
+        updateProgress();
     }
 
     public void deleteDependent(Task task){
@@ -205,6 +225,7 @@ public class Task implements Comparable<Task>,Cloneable  {
 
     public void setMajorLabel(Major majorLabel) {
         this.majorLabel = majorLabel;
+        updateProgress();
     }
 
     public int getDegree() {
@@ -254,5 +275,20 @@ public class Task implements Comparable<Task>,Cloneable  {
         System.out.println("Assign: " + getAssignments());
         System.out.println("Status: " + getStatus());
         System.out.println("Label: " + labels.getType());
+    }
+
+    public void updateProgress() {
+        Date today = Date.today();
+
+        // Kiểm tra nếu trạng thái là TODO và đã qua endDay
+        if (status == Status.TODO && endDay.compareTo(today) < 0) {
+            startDay = today;
+            endDay = new Date(today.day() + time, today.month(), today.year());
+        }
+
+        // Cập nhật tiến độ cho các task phụ thuộc
+        for (Task dependentTask : dependentTasks) {
+            dependentTask.updateProgress();
+        }
     }
 }

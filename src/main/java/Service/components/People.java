@@ -20,6 +20,12 @@ public class People implements Components{
         this.majors = majors;
     }
 
+    public People(String name , String id , Major major) {
+        this.name = name;
+        this.id = id;
+        this.majors.add(major);
+    }
+
     public ArrayList<Major> getMajors() {
         return majors;
     }

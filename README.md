@@ -94,7 +94,6 @@ We have an exciting roadmap for the future development of this project.
 Here are some of the key features and improvements we plan to implement:
 
 ### Subject Roadmap
-
 - [x] All structure using in project
 - [x] Create components in Project
 - [x] Writing and reading json file
@@ -107,13 +106,14 @@ Here are some of the key features and improvements we plan to implement:
 - [ ] Display in normal view (Table)
 - [ ] Display task of project in the more near end day of each task
 - [x] The relationship between tasks
-- [ ] Pathfinding algorithm
+- [x] Pathfinding algorithm
 - [ ] Normal User interface
 - [x] Priority Level of each task
 - [ ] Priority Level of each project
 - [ ] Database for store big data
 - [ ] Stack for operation (state at time k of manager)
 - [x] manager display in console in normal mode
+- [] Automated workforce allocation for tasks. 
 
 ### After subject
 - Mobile, web version
