@@ -17,13 +17,13 @@ public class Main {
 
         project1.createNewTask(1);
         project1.createNewTask("Design");
+        project1.createNewTask(2);
         project1.get(1).setTime(5);
 
-        project1.search("Untitled").setTittle(new Tittle("Making User interface"));
 
+        project1.search("Untitled").setTittle(new Tittle("Making User interface"));
+        project1.search("Untitled").setTittle(new Tittle("Test"));
         project1.addDependentTask("Design", "Making User interface");
-        project1.createNewTask(2);
-        project1.addDependentTask("Making User interface", "Untitled");
 
 
         ArrayList<Task> longestDistances = project1.findLongestPath();

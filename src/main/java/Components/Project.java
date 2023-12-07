@@ -18,14 +18,10 @@ public class Project {
     private ArrayList<Task> tasks = new ArrayList<>();
     private Label label = new Label();
     private Repository repository = new Repository("" , "");
-    private final Task FINISH_TASK = new Task();
 
     private Map<Task,Map<Task, Integer>> graph = new HashMap<>();
 
     public Project() {
-        Tittle tittle1 = new Tittle("End", "");
-        FINISH_TASK.setTittle(tittle1);
-        FINISH_TASK.setTime(0);
     }
 
     public Project(Tittle tittle , ArrayList<Task> tasks , Label label , Repository repository) {
@@ -54,7 +50,6 @@ public class Project {
     }
 
     public void addTask(Task task) {
-        task.addDependentTask(FINISH_TASK);
         tasks.add(task);
         graph.put(task, new HashMap<>());
     }
@@ -78,49 +73,62 @@ public class Project {
         graph.get(task1).put(task2, task1.getTime());
 
         task1.addDependentTask(task2);
-        task1.deleteDependent(FINISH_TASK);
     }
-
+    // Phương thức để tìm đường găng có tổng thời gian lớn nhất
     public ArrayList<Task> findLongestPath() {
-        // Tạo bản sao của danh sách tasks để tránh ảnh hưởng đến dữ liệu gốc
-        ArrayList<Task> clonedTasks = tasks.copy();
+        // Sử dụng một map để lưu trữ tổng thời gian tốt nhất cho mỗi task
+        Map<Task, Integer> maxTimeMap = new HashMap<>();
 
-        Sort.sortByTime(clonedTasks);
-
-        // Khởi tạo bảng lưu trữ tổng thời gian tốt nhất cho mỗi task
-        Map<Task, Integer> bestTimes = new HashMap<>();
-
-        // Duyệt qua từng task và cập nhật tổng thời gian tốt nhất
-        for (Task task : clonedTasks) {
-            int maxTime = task.getTime();
-
-            // Duyệt qua các dependentTasks để cập nhật tổng thời gian tốt nhất
-            for (Task dependentTask : task.getDependentTasks()) {
-                int totalTime = bestTimes.getOrDefault(dependentTask, 0) + dependentTask.getTime();
-                maxTime = Math.max(maxTime, totalTime);
-            }
-
-            bestTimes.put(task, maxTime);
+        // Tìm đường găng cho mỗi task
+        for (Task task : tasks) {
+            findLongestPathForTask(task, maxTimeMap);
         }
 
         // Tìm task có tổng thời gian lớn nhất
-        Task maxTimeTask = Collections.max(bestTimes.entrySet(), Map.Entry.comparingByValue()).getKey();
+        Task maxTimeTask = null;
+        int maxTime = 0;
 
-        // Tạo danh sách chứa đường găng có tổng thời gian lớn nhất
+        for (Task task : tasks) {
+            if (maxTimeMap.containsKey(task) && maxTimeMap.get(task) > maxTime) {
+                maxTime = maxTimeMap.get(task);
+                maxTimeTask = task;
+            }
+        }
+
+        // Xây dựng danh sách đường găng từ task có tổng thời gian lớn nhất
         ArrayList<Task> longestPath = new ArrayList<>();
-        addLongestPath(longestPath, maxTimeTask, bestTimes);
+        buildLongestPath(maxTimeTask, longestPath);
 
         return longestPath;
     }
 
-    private void addLongestPath(ArrayList<Task> longestPath, Task currentTask, Map<Task, Integer> bestTimes) {
-        longestPath.add(currentTask);
+    // Phương thức đệ quy để tìm đường găng cho mỗi task
+    private int findLongestPathForTask(Task task, Map<Task, Integer> maxTimeMap) {
+        // Nếu đã tính tổng thời gian cho task này rồi, trả về giá trị đã tính
+        if (maxTimeMap.containsKey(task)) {
+            return maxTimeMap.get(task);
+        }
 
-        for (Task dependentTask : currentTask.getDependentTasks()) {
-            if (bestTimes.get(dependentTask) + dependentTask.getTime() == bestTimes.get(currentTask)) {
-                addLongestPath(longestPath, dependentTask, bestTimes);
-                break;
+        int maxPathTime = 0;
+
+        // Tính tổng thời gian cho tất cả các task phụ thuộc
+        for (Task dependentTask : task.getDependentTasks()) {
+            int pathTime = findLongestPathForTask(dependentTask, maxTimeMap);
+            maxPathTime = Math.max(maxPathTime, pathTime);
+        }
+
+        // Tổng thời gian cho task hiện tại là tổng thời gian của tất cả các task phụ thuộc cộng với thời gian của task hiện tại
+        maxTimeMap.put(task, maxPathTime + task.getTime());
+
+        return maxTimeMap.get(task);
+    }
+
+    private void buildLongestPath(Task task, ArrayList<Task> longestPath) {
+        if (task != null) {
+            for (Task dependentTask : task.getDependentTasks()) {
+                buildLongestPath(dependentTask, longestPath);
             }
+            longestPath.add(task);
         }
     }
 
