@@ -2,25 +2,30 @@ package Components;
 
 import Model.Graph;
 import Model.ArrayList;
-import Model.HashMap;
+
 import Model.Node.Vertex;
 import Service.Sort;
-import Service.components.*;
+import Service.components.Date;
+import Service.components.Label;
+import Service.components.Repository;
+import Service.components.Tittle;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.*;
 
 public class Project {
     private Tittle tittle = new Tittle("");
-    private Graph<Tittle, Task> graph = new Graph<>();
-    ArrayList<Task> tasks = new ArrayList<>();
-    Label label = new Label();
-    Repository repository = new Repository("" , "");
-    private final Vertex<Tittle, Task> FINISH_TASK = new Vertex<>(new Tittle("End", ""), new Task());
+    private ArrayList<Task> tasks = new ArrayList<>();
+    private Label label = new Label();
+    private Repository repository = new Repository("" , "");
+    private final Task FINISH_TASK = new Task();
+
+    private Map<Task,Map<Task, Integer>> graph = new HashMap<>();
 
     public Project() {
         Tittle tittle1 = new Tittle("End", "");
-        FINISH_TASK.getNode().setKey(tittle1);
-        FINISH_TASK.getNode().getData().setTittle(tittle1);
-        FINISH_TASK.getNode().getData().setTime(0);
+        FINISH_TASK.setTittle(tittle1);
+        FINISH_TASK.setTime(0);
     }
 
     public Project(Tittle tittle , ArrayList<Task> tasks , Label label , Repository repository) {
@@ -49,39 +54,75 @@ public class Project {
     }
 
     public void addTask(Task task) {
-        task.addDependentTask(FINISH_TASK.getNode().getData());
+        task.addDependentTask(FINISH_TASK);
         tasks.add(task);
-        Vertex<Tittle, Task> u = new Vertex<>(task.getTittle(), task);
-        graph.addVertex(u);
-        graph.addEdge(u, FINISH_TASK);
+        graph.put(task, new HashMap<>());
     }
 
-    public void addDependentTask(int l, int r){
-        addDependentTask(tasks.get(l), tasks.get(r));
+    public void addDependentTask(int task, int denpendenttask){
+        addDependentTask(tasks.get(task), tasks.get(denpendenttask));
     }
 
     public void addDependentTask(String task1, String task2){
-        addDependentTask( search(task1),  search(task2));
-    }
-
-    public void addDependentTask(Vertex<Tittle, Task> u, Vertex<Tittle, Task> v){
-        u.addEdge(v, u.getNode().getData().getTime());
+        addDependentTask(search(task1),  search(task2));
     }
 
     public void addDependentTask(Task task1, Task task2){
         if (!tasks.contain(task1) && !tasks.contain(task2)){
-            throw new IllegalArgumentException(task1.getTittle().getTittle() + ", " + task2.getTittle() + "is not in project!");
+            throw new IllegalArgumentException(task1.getTittle().getTittle() + ", " + task2.getTittle() + "are not in project!");
         } else if (!tasks.contain(task1)){
             addTask(task1);
         } else if (! tasks.contain(task2)){
             addTask(task2);
         }
+        graph.get(task1).put(task2, task1.getTime());
+
         task1.addDependentTask(task2);
-        task1.getDependentTasks().remove(FINISH_TASK);
-        Vertex<Tittle, Task> u = new Vertex<>(task2.getTittle(), task2);
-        addDependentTask(u, FINISH_TASK);
+        task1.deleteDependent(FINISH_TASK);
     }
 
+    public ArrayList<Task> findLongestPath() {
+        // Tạo bản sao của danh sách tasks để tránh ảnh hưởng đến dữ liệu gốc
+        ArrayList<Task> clonedTasks = tasks.copy();
+
+        Sort.sortByTime(clonedTasks);
+
+        // Khởi tạo bảng lưu trữ tổng thời gian tốt nhất cho mỗi task
+        Map<Task, Integer> bestTimes = new HashMap<>();
+
+        // Duyệt qua từng task và cập nhật tổng thời gian tốt nhất
+        for (Task task : clonedTasks) {
+            int maxTime = task.getTime();
+
+            // Duyệt qua các dependentTasks để cập nhật tổng thời gian tốt nhất
+            for (Task dependentTask : task.getDependentTasks()) {
+                int totalTime = bestTimes.getOrDefault(dependentTask, 0) + dependentTask.getTime();
+                maxTime = Math.max(maxTime, totalTime);
+            }
+
+            bestTimes.put(task, maxTime);
+        }
+
+        // Tìm task có tổng thời gian lớn nhất
+        Task maxTimeTask = Collections.max(bestTimes.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+        // Tạo danh sách chứa đường găng có tổng thời gian lớn nhất
+        ArrayList<Task> longestPath = new ArrayList<>();
+        addLongestPath(longestPath, maxTimeTask, bestTimes);
+
+        return longestPath;
+    }
+
+    private void addLongestPath(ArrayList<Task> longestPath, Task currentTask, Map<Task, Integer> bestTimes) {
+        longestPath.add(currentTask);
+
+        for (Task dependentTask : currentTask.getDependentTasks()) {
+            if (bestTimes.get(dependentTask) + dependentTask.getTime() == bestTimes.get(currentTask)) {
+                addLongestPath(longestPath, dependentTask, bestTimes);
+                break;
+            }
+        }
+    }
 
     public void deleteDependentTask(int id, int dependent){
         tasks.get(id).deleteDependent(tasks.get(dependent));
@@ -90,7 +131,7 @@ public class Project {
     public void removeTask(Task task) {
         tasks.remove(task);
         for (int i = 0; i < tasks.size(); i++){
-            tasks.get(i).dependentTasks.remove(task);
+            tasks.get(i).getDependentTasks().remove(task);
         }
     }
 
@@ -139,18 +180,18 @@ public class Project {
     }
 
 
-    @Override
-    public String toString() {
-        return mapping().toString();
-    }
-
-    public HashMap<String> mapping() {
-        HashMap<String> map = new HashMap<>();
-        map.add("Tittle" , tittle.mapping().toString());
-        map.add("Task" , new HashMap<>(tasks).toString());
-        map.add("Label" , label.mapping().toString());
-        return map;
-    }
+//    @Override
+//    public String toString() {
+//        return mapping().toString();
+//    }
+//
+//    public HashMap<String> mapping() {
+//        HashMap<String> map = new HashMap<>();
+//        map.add("Tittle" , tittle.mapping().toString());
+//        map.add("Task" , new HashMap<>(tasks).toString());
+//        map.add("Label" , label.mapping().toString());
+//        return map;
+//    }
 
     public void sortByTittle(){
         tasks = Sort.sort(tasks);

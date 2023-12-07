@@ -5,6 +5,7 @@ import Service.components.Components;
 import Service.components.Tittle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class ArrayList<E> implements Iterable<E> {
@@ -114,8 +115,11 @@ public class ArrayList<E> implements Iterable<E> {
         return false;
     }
 
-    public static ArrayList<Task> copy(ArrayList<Task> array){
-        return new ArrayList<>(array.toArray());
+
+    public ArrayList<E> copy(){
+        E[] container = (E[])(new Object[size]);
+        System.arraycopy(this.containers, 0, container, 0, size);
+        return new ArrayList<>(container);
     }
 
     private void addPrivate(Object data){

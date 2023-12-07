@@ -72,4 +72,8 @@ public class Tittle implements Components, Comparable<Tittle> {
 	public int hashCode() {
 		return Objects.hash(getTittle() , getDescription());
 	}
+
+	public Tittle copy() {
+		return new Tittle(tittle, description);
+	}
 }

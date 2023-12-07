@@ -59,4 +59,8 @@ public class Label implements Components {
         map.add("Description", description);
         return map;
     }
+
+	public Label copy() {
+        return new Label(this.type, description);
+	}
 }

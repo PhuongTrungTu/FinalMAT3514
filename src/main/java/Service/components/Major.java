@@ -31,4 +31,8 @@ public class Major {
 	public int getLEVEL() {
 		return LEVEL;
 	}
+
+	public Major copy() {
+		return new Major(getLEVEL());
+	}
 }

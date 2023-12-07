@@ -1,24 +1,23 @@
 package Components;
 
-import Model.*;
+import Model.ArrayList;
+import Model.HashMap;
 import Service.components.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.HashSet;
-import java.util.Set;
 
 
-public class Task implements Comparable<Task> {
+public class Task implements Comparable<Task>,Cloneable  {
     private Tittle tittle = new Tittle();
     private Date startDay = Date.today();
     private Date endDay = Date.today();
-    ArrayList<People> assignments = new ArrayList<>();
-    Status status = Status.TODO;
-    Label labels = new Label();
-    Major majorLabel = new Major();
+    private ArrayList<People> assignments = new ArrayList<>();
+    private Status status = Status.TODO;
+    private Label labels = new Label();
+    private Major majorLabel = new Major();
     private int time = 0;
-    Set<Task> dependentTasks = new HashSet<>();
-    int degree;
+    private ArrayList<Task> dependentTasks = new ArrayList<Task>();
+    private int degree;
 
     public enum Status{
         TODO(-1),IN_PROCESS(0),DONE(1);
@@ -61,7 +60,7 @@ public class Task implements Comparable<Task> {
         this.time = time;
     }
 
-    public Task(Tittle tittle , Date startDay , Date endDay , ArrayList<People> assignments , Status status , Label labels , Major majorLabel , int time , Set<Task> dependentTasks , int degree) {
+    public Task(Tittle tittle , Date startDay , Date endDay , ArrayList<People> assignments , Status status , Label labels , Major majorLabel , int time , ArrayList<Task> dependentTasks , int degree) {
         this.tittle = tittle;
         this.startDay = startDay;
         this.endDay = endDay;
@@ -112,17 +111,17 @@ public class Task implements Comparable<Task> {
         System.out.println(unSuitable);
     }
 
-    public void setAssignments(ArrayList<People> assignments, boolean check) {
+    public void setAssignments(ArrayList<People> assignments, boolean suitable) {
         this.assignments = new ArrayList<>();
         ArrayList<People> unSuitable = new ArrayList<>();
         for(People people: assignments){
-            if (people.getMajors().contain(majorLabel) || check || people.getMajors().contain(new Major())){
+            if (people.getMajors().contain(majorLabel) || suitable || people.getMajors().contain(new Major())){
                 assignments.add(people);
             }else{
                 unSuitable.add(people);
             }
         }
-        if (!check){
+        if (!suitable){
             System.out.println("These people can't assign this task because they don't have suitable major!");
             System.out.println(unSuitable);
         }
@@ -153,11 +152,18 @@ public class Task implements Comparable<Task> {
         this.labels = labels;
     }
 
-    public Set<Task> getDependentTasks() {
-        return dependentTasks;
+    public ArrayList<Task> getDependentTasks() {
+        ArrayList<Task> result = new ArrayList<>();
+        for (Task task: dependentTasks){
+            if (task != null){
+                result.add(task);
+            }
+        }
+        return result;
     }
 
-    public void setDependentTasks(Set<Task> dependentTasks) {
+
+    public void setDependentTasks(ArrayList<Task> dependentTasks) {
         this.dependentTasks = dependentTasks;
     }
 
@@ -212,6 +218,24 @@ public class Task implements Comparable<Task> {
     @Override
     public String toString() {
         return mapping().toString();
+    }
+
+    public Task copy() {
+        try {
+            Task clonedTask = (Task) super.clone();
+            // Copy các đối tượng tham chiếu (nếu cần)
+            clonedTask.tittle = this.tittle.copy();
+            clonedTask.startDay = startDay.copy();
+            clonedTask.endDay = endDay.copy();
+            clonedTask.assignments = assignments.copy();
+            clonedTask.labels = this.labels.copy();
+            clonedTask.majorLabel = this.majorLabel.copy();
+            clonedTask.dependentTasks = dependentTasks.copy();
+            return clonedTask;
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public HashMap<String> mapping(){
