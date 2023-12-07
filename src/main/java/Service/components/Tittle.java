@@ -54,6 +54,9 @@ public class Tittle implements Components, Comparable<Tittle> {
 
 	@Override
 	public int compareTo(Tittle o) {
+		System.out.println(o.getTittle());
+		System.out.println(tittle);
+		System.out.println();
 		return tittle.compareTo(o.getTittle());
 	}
 

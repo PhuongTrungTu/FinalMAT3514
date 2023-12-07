@@ -39,7 +39,8 @@ public class Task implements Comparable<Task>,Cloneable  {
         }
     }
 
-    public Task() {
+    public Task(String tittle) {
+        this.tittle = new Tittle(tittle);
     }
 
     public Task(int level){
@@ -254,6 +255,17 @@ public class Task implements Comparable<Task>,Cloneable  {
         }
     }
 
+    @Override
+    public String toString(){
+        StringBuilder result = new StringBuilder();
+        result.append("Tittle: ").append(tittle.getTittle()).append("\n");
+        result.append("Start day: " + getStartDay()).append("\n");
+        result.append("End day: " + getEndDay()).append("\n");
+        result.append("Assign: " + getAssignments()).append("\n");
+        result.append("Status: " + getStatus()).append("\n");
+        result.append("Label: " + labels.getType());
+        return result.toString();
+    }
 
     public void display(){
         System.out.println("Tittle: " + tittle.getTittle() );
@@ -262,18 +274,16 @@ public class Task implements Comparable<Task>,Cloneable  {
         System.out.println("Assign: " + getAssignments());
         System.out.println("Status: " + getStatus());
         System.out.println("Label: " + labels.getType());
+        System.out.println("_________________________");
     }
 
     public void updateProgress() {
         Date today = Date.today();
-
-        // Kiểm tra nếu trạng thái là TODO và đã qua endDay
         if (status == Status.TODO && endDay.compareTo(today) < 0) {
             startDay = today;
             endDay = new Date(today.day() + time, today.month(), today.year());
         }
 
-        // Cập nhật tiến độ cho các task phụ thuộc
         for (Task dependentTask : dependentTasks) {
             dependentTask.updateProgress();
         }

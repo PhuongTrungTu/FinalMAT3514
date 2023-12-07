@@ -1,14 +1,9 @@
 import Components.Project;
 import Components.ProjectManager;
-import Components.Task;
-import Model.ArrayList;
 import Service.components.Date;
 import Service.components.Major;
 import Service.components.People;
 import Service.components.Tittle;
-
-import java.util.Map;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -31,10 +26,12 @@ public class Main {
         project1.search("Design").setEndDay(new Date(3,1,2023));
         project1.search("Design").setTime(10);
 
-        project1.search("Design").addAssignMent(new People("Grizmo", "21000709", new Major(0)), false);
+        project1.search("Design").addAssignMent(new People("Grizmo", "21000709", new Major(4)), true);
         project1.sortByDay();
 
         manager.display();
+
+        System.out.println(project1.filterTask("Making User interface"));
 
     }
 }

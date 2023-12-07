@@ -1,14 +1,13 @@
 package Components;
 
+import Model.BinarySearchingTree;
 import Model.Graph;
 import Model.ArrayList;
 
 import Model.Node.Vertex;
 import Service.Sort;
+import Service.components.*;
 import Service.components.Date;
-import Service.components.Label;
-import Service.components.Repository;
-import Service.components.Tittle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
@@ -20,6 +19,7 @@ public class Project {
     private Repository repository = new Repository("" , "");
     private Map<Task,Map<Task, Integer>> graph = new HashMap<>();
     private int maxTime = 0;
+    private BinarySearchingTree<Tittle, Task> tree = new BinarySearchingTree<>();
 
     public Project() {
     }
@@ -44,14 +44,14 @@ public class Project {
     }
 
     public void createNewTask(String tittle){
-        Task task = new Task();
-        task.setTittle(new Tittle(tittle));
+        Task task = new Task(tittle);
         addTask(task);
     }
 
     public void addTask(Task task) {
         tasks.add(task);
         graph.put(task, new HashMap<>());
+        tree.insert(task.getTittle(), task);
     }
 
     public void addDependentTask(int task, int denpendenttask){
@@ -242,13 +242,17 @@ public class Project {
         for (int i = 0; i < tasks().size(); i++){
             System.out.println("Task: " + (i + 1));
             tasks.get(i).display();
-            System.out.println("______________________");
         }
+        System.out.println("************************");
     }
+
+//    public ArrayList<Task> filterTask(String tittle){
+//        return tree.search(new Tittle(tittle));
+//    }
 
     public Task search(String tittle){
         for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).getTittle().getTittle().equalsIgnoreCase(tittle)){
+            if (tasks.get(i).getTittle().getTittle().equals(tittle)){
                 return tasks.get(i);
             }
         }
@@ -262,5 +266,8 @@ public class Project {
             }
         }
         return null;
+    }
+
+    public void autoAssignTask(ArrayList<People> people){
     }
 }
