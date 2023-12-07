@@ -2,6 +2,6 @@ package Service.components;
 
 import Model.HashMap;
 
-public interface Components {
-	HashMap<String> mapping();
+public interface Components<E> {
+	HashMap<String, E> mapping();
 }

@@ -45,8 +45,8 @@ public class Tittle implements Components, Comparable<Tittle> {
 	}
 
 	@Override
-	public HashMap<String> mapping(){
-		HashMap<String> map = new HashMap<>();
+	public HashMap<String, String> mapping(){
+		HashMap<String, String> map = new HashMap<>();
 		map.add("Tittle",tittle);
 		map.add("Description", description);
 		return map;

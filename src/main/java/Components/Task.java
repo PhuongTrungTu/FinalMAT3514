@@ -236,11 +236,6 @@ public class Task implements Comparable<Task>,Cloneable  {
         this.degree = degree;
     }
 
-    @Override
-    public String toString() {
-        return mapping().toString();
-    }
-
     public Task copy() {
         try {
             Task clonedTask = (Task) super.clone();
@@ -259,15 +254,7 @@ public class Task implements Comparable<Task>,Cloneable  {
         }
     }
 
-    public HashMap<String> mapping(){
-        HashMap<String> map = new HashMap<>();
-        map.add("Tittle", tittle.toString());
-        map.add("EndDay", endDay.mapping().toString());
-        map.add("Assignments", new HashMap<>(assignments).toString());
-        map.add("Status", status.toString());
-        map.add("Label", labels.toString());
-        return map;
-    }
+
     public void display(){
         System.out.println("Tittle: " + tittle.getTittle() );
         System.out.println("Start day: " + getStartDay());

@@ -53,8 +53,8 @@ public class Label implements Components {
         return mapping().toString();
     }
 
-    public HashMap<String> mapping() {
-        HashMap<String> map = new HashMap<>();
+    public HashMap<String, String> mapping() {
+        HashMap<String, String> map = new HashMap<>();
         map.add("Type", type);
         map.add("Description", description);
         return map;

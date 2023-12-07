@@ -53,8 +53,8 @@ public class People implements Components{
         return mapping().toString();
     }
 
-    public HashMap<String> mapping() {
-        HashMap<String> map = new HashMap<>();
+    public HashMap<String, String> mapping() {
+        HashMap<String, String> map = new HashMap<>();
         map.add("Name",name);
         map.add("Id", id);
         return map;

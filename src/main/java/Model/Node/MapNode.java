@@ -1,20 +1,20 @@
 package Model.Node;
 
-public class MapNode<E> {
-	private String field;
+public class MapNode<K, E> {
+	private K key;
 	private E data;
 
-	public MapNode(String field , E data) {
-		this.field = field;
+	public MapNode(K key , E data) {
+		this.key = key;
 		this.data = data;
 	}
 
-	public String getField() {
-		return field;
+	public K getKey() {
+		return key;
 	}
 
-	public void setField(String field) {
-		this.field = field;
+	public void setKey(K key) {
+		this.key = key;
 	}
 
 	public E getData() {
@@ -27,7 +27,7 @@ public class MapNode<E> {
 
 	@Override
 	public String toString() {
-		return "\"" + field + "\":" + data;
+		return  key + ":" + data;
 
 	}
 }

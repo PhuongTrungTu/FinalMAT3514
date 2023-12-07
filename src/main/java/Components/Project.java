@@ -203,20 +203,6 @@ public class Project {
         this.repository = repository;
     }
 
-
-//    @Override
-//    public String toString() {
-//        return mapping().toString();
-//    }
-//
-//    public HashMap<String> mapping() {
-//        HashMap<String> map = new HashMap<>();
-//        map.add("Tittle" , tittle.mapping().toString());
-//        map.add("Task" , new HashMap<>(tasks).toString());
-//        map.add("Label" , label.mapping().toString());
-//        return map;
-//    }
-
     public void sortByTittle(){
         tasks = Sort.sort(tasks);
     }

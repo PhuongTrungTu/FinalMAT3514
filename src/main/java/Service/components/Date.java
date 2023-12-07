@@ -107,11 +107,11 @@ public record Date(int day , int month , int year) implements Comparable<Date>, 
     }
 
     @Override
-    public HashMap<String> mapping() {
-        HashMap<String> map = new HashMap<>();
-        map.add("Day" , day + "");
-        map.add("Month" , month + "");
-        map.add("Year" , year + "");
+    public HashMap<String,Integer> mapping() {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.add("Day" , day);
+        map.add("Month" , month);
+        map.add("Year" , year);
         return map;
     }
 }

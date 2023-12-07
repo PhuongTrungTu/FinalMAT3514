@@ -72,38 +72,9 @@ public class ProjectManager {
 
     @Override
     public String toString() {
-        return new HashMap<>(projects).toString();
+        return new HashMap<>().toString();
     }
 
-    public ArrayList<Project> search(Components components){
-        ArrayList<Project> result = new ArrayList<>();
-        for (int i = 0; i < projects.size(); i++){
-            if (components instanceof Tittle){
-                if (projects.get(i).getTittle().getTittle().equalsIgnoreCase((((Tittle) components).getTittle()))){
-                    result.add(projects.get(i));
-                }
-            } else if (components instanceof Label){
-                if (projects.get(i).getLabel().getType().equalsIgnoreCase((((Label) components).getType()))){
-                    result.add(projects.get(i));
-                }
-            } else if (components instanceof Repository){
-                if (projects.get(i).getRepository().getTittle().equalsIgnoreCase((((Repository) components).getTittle()))){
-                    result.add(projects.get(i));
-                }
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Project> search(String components){
-        ArrayList<Project> result = new ArrayList<>();
-        for (int i = 0; i < projects.size(); i++){
-            if (projects.get(i).getTittle().getTittle().equalsIgnoreCase(components)){
-                    result.add(projects.get(i));
-            }
-        }
-        return result;
-    }
     public void writeData(String path){
         WriteData.writeDown(path, projects);
     }
