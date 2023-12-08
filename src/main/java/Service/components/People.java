@@ -1,5 +1,6 @@
 package Service.components;
 
+import Components.Task;
 import Model.ArrayList;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,6 +9,7 @@ public class People{
     private String name;
     private String id;
     private ArrayList<Major> majors = new ArrayList<>();
+    private ArrayList<Task> assignedTask = new ArrayList<>();
 
     public People(String name, String id) {
         this.name = name;
@@ -18,7 +20,6 @@ public class People{
         this.name = name;
         this.id = id;
         this.majors = majors;
-
     }
 
     public People(String name , String id , Major major) {
@@ -71,5 +72,17 @@ public class People{
         map.add("Name",name);
         map.add("Id", id);
         return map;
+    }
+
+    public void assign(Task task){
+        assignedTask.add(task);
+    }
+
+    public void removeTask(Task task){
+        assignedTask.remove(task);
+    }
+
+    public boolean hasAssignedTask() {
+        return assignedTask.isEmpty();
     }
 }

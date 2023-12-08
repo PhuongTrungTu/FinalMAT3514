@@ -158,4 +158,11 @@ public class ArrayList<E> implements Iterable<E> {
     public boolean isEmpty() {
         return size == 0;
     }
+
+    public ArrayList<E> addAll(ArrayList<E> array){
+        for (int i = 0; i < array.size; i++){
+            add(array.get(i));
+        }
+        return this;
+    }
 }

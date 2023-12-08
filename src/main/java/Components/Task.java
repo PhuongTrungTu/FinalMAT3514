@@ -1,7 +1,6 @@
 package Components;
 
 import Model.ArrayList;
-import Model.HashMap;
 import Service.components.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -107,9 +106,10 @@ public class Task implements Comparable<Task>,Cloneable  {
         return assignments;
     }
 
-    public void addAssignMent(People people, boolean unsuitalbe){
+    public void addassignment(People people, boolean unsuitalbe){
         if ((people.getMajors().contain(majorLabel) || people.getMajors().contain(new Major())) || unsuitalbe){
             assignments.add(people);
+            people.assign(this);
         }else{
             System.out.println("Can't assign " + tittle.getTittle() + " for " + people.getName());
         }
@@ -121,6 +121,7 @@ public class Task implements Comparable<Task>,Cloneable  {
         for(People people: assignments){
             if (people.getMajors().contain(majorLabel) || people.getMajors().contain(new Major())){
                 assignments.add(people);
+                people.assign(this);
             }else{
                 unSuitable.add(people);
             }
@@ -135,6 +136,7 @@ public class Task implements Comparable<Task>,Cloneable  {
         for(People people: assignments){
             if (people.getMajors().contain(majorLabel) || suitable || people.getMajors().contain(new Major())){
                 assignments.add(people);
+                people.assign(this);
             }else{
                 unSuitable.add(people);
             }
@@ -226,6 +228,7 @@ public class Task implements Comparable<Task>,Cloneable  {
 
     public void setMajorLabel(Major majorLabel) {
         this.majorLabel = majorLabel;
+        this.labels = new Label(majorLabel.getMAJOR());
         updateProgress();
     }
 

@@ -1,10 +1,8 @@
 package Components;
 
 import Model.BinarySearchingTree;
-import Model.Graph;
 import Model.ArrayList;
 
-import Model.Node.Vertex;
 import Service.Sort;
 import Service.components.*;
 import Service.components.Date;
@@ -40,6 +38,7 @@ public class Project {
 
     public void createNewTask(int type){
         Task task = new Task(type);
+        task.setMajorLabel(new Major(type));
         addTask(task);
     }
 
@@ -277,15 +276,48 @@ public class Project {
         return false;
     }
 
-
-    public void assignTasks(ArrayList<People> people) {
-        if (!tasks.isEmpty()){
-            throw new IllegalArgumentException("Nothing to assign!");
-        } else if (people.isEmpty()){
-            throw new IllegalArgumentException("Don't have any people to assign!");
+    public static ArrayList<People> sortPeopleByMajor(ArrayList<People> peoples){
+        ArrayList<People> result = new ArrayList<>();
+        ArrayList<ArrayList<People>> container = new ArrayList<>();
+        for (int i = 0; i < Major.MAX; i++){
+            container.add(new ArrayList<>());
         }
-        sortByMajor();
+        for (People people: peoples){
+            for(int j = 0; j < container.size(); j++){
+                if (people.getMajors().contain(new Major(j))){
+                    container.get(j).add(people);
+                }
+            }
+        }
 
+        for (int i = 0; i < container.size(); i++){
+            result.addAll(container.get(i));
+        }
+        return result;
     }
+
+    public void assignTasks(ArrayList<People> peopleList) {
+        for (Task task : tasks) {
+            assignPeopleToTask(peopleList, task);
+        }
+    }
+
+    private void assignPeopleToTask(ArrayList<People> peopleList, Task task) {
+        for (People person : peopleList) {
+            if (person.getMajors().contain(task.getMajorLabel())) {
+                task.addassignment(person, false);
+                return; // Return once a suitable person is found for the task
+            }
+        }
+
+        // If no suitable person is found, try to assign a person with major "All"
+        for (People person : peopleList) {
+            if (person.getMajors().contain(new Major(0)) && person.hasAssignedTask()) {
+                task.addassignment(person, false);
+                return; // Return once a person with major "All" is found
+            }
+        }
+    }
+
 
 }
