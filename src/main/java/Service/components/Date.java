@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 
-public record Date(int day , int month , int year) implements Comparable<Date>, Components, Cloneable {
+public record Date(int day , int month , int year) implements Comparable<Date> {
     public static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
@@ -106,7 +106,6 @@ public record Date(int day , int month , int year) implements Comparable<Date>, 
         return new Date(day,month, year);
     }
 
-    @Override
     public HashMap<String,Integer> mapping() {
         HashMap<String, Integer> map = new HashMap<>();
         map.add("Day" , day);

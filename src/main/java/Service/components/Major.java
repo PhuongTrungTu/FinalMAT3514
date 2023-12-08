@@ -1,6 +1,6 @@
 package Service.components;
 
-public class Major {
+public class Major implements Comparable<Major>{
 	private final String MAJOR;
 	private final int LEVEL;
 	public Major(){
@@ -34,5 +34,10 @@ public class Major {
 
 	public Major copy() {
 		return new Major(getLEVEL());
+	}
+
+	@Override
+	public int compareTo(Major o) {
+		return LEVEL - o.LEVEL;
 	}
 }

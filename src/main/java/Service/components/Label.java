@@ -3,7 +3,7 @@ package Service.components;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Label implements Components {
+public class Label {
     private String type = "Untyped";
     private String description = "";
 

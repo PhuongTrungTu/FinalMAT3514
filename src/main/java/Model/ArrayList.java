@@ -1,11 +1,7 @@
 package Model;
 
-import Components.Task;
-import Service.components.Components;
-import Service.components.Tittle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class ArrayList<E> implements Iterable<E> {
@@ -157,5 +153,9 @@ public class ArrayList<E> implements Iterable<E> {
                 return array[index - 1];
             }
         };
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 }

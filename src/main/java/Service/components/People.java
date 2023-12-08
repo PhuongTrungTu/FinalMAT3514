@@ -4,7 +4,7 @@ import Model.ArrayList;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class People implements Components{
+public class People{
     private String name;
     private String id;
     private ArrayList<Major> majors = new ArrayList<>();
@@ -18,6 +18,7 @@ public class People implements Components{
         this.name = name;
         this.id = id;
         this.majors = majors;
+
     }
 
     public People(String name , String id , Major major) {
@@ -28,6 +29,18 @@ public class People implements Components{
 
     public ArrayList<Major> getMajors() {
         return majors;
+    }
+
+    public void setMajors(ArrayList<Major> majors) {
+        this.majors = majors;
+    }
+
+    public void addMajor(Major major){
+        if (major.getMAJOR().equals("All")){
+            majors = new ArrayList<>();
+        }
+        majors.add(major);
+
     }
 
     @JsonProperty("name")

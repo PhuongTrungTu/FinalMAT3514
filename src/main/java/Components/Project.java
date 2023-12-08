@@ -219,6 +219,9 @@ public class Project {
         tasks = Sort.sortByDegree(tasks);
     }
 
+    public void sortByMajor(){
+        tasks = Sort.sortByMajor(tasks);
+    }
     public void roadMapDisplayStyle(){
         sortByDay();
         int index = 0;
@@ -246,17 +249,13 @@ public class Project {
         System.out.println("************************");
     }
 
-//    public ArrayList<Task> filterTask(String tittle){
-//        return tree.search(new Tittle(tittle));
-//    }
-
     public Task search(String tittle){
         for (int i = 0; i < tasks.size(); i++){
             if (tasks.get(i).getTittle().getTittle().equals(tittle)){
                 return tasks.get(i);
             }
         }
-        return null;
+        throw new NullPointerException("Task " + tittle + " didn't created in project");
     }
 
     public Task search(Tittle tittle){
@@ -265,9 +264,28 @@ public class Project {
                 return tasks.get(i);
             }
         }
-        return null;
+        throw new NullPointerException("Task " + tittle.getTittle() + " didn't created in project");
     }
 
-    public void autoAssignTask(ArrayList<People> people){
+    // Kiểm tra xem danh sách người có người nào thuộc chuyên môn cụ thể không
+    private boolean containsMajor(ArrayList<People> people, Major major) {
+        for (People person : people) {
+            if (person.getMajors().contain(major)) {
+                return true;
+            }
+        }
+        return false;
     }
+
+
+    public void assignTasks(ArrayList<People> people) {
+        if (!tasks.isEmpty()){
+            throw new IllegalArgumentException("Nothing to assign!");
+        } else if (people.isEmpty()){
+            throw new IllegalArgumentException("Don't have any people to assign!");
+        }
+        sortByMajor();
+
+    }
+
 }

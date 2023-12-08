@@ -3,7 +3,7 @@ package Service.components;
 import Model.HashMap;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Repository implements Components {
+public class Repository {
     String link = "";
     String tittle = "";
 
@@ -38,7 +38,6 @@ public class Repository implements Components {
         return mapping().toString();
     }
 
-    @Override
     public HashMap<String, String> mapping() {
         HashMap<String, String> map = new HashMap<>();
         map.add("Tittle",tittle);

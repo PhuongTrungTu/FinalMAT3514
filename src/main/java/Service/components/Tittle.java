@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class Tittle implements Components, Comparable<Tittle> {
+public class Tittle implements Comparable<Tittle> {
 	private String tittle = "Untitled";
 	private String description = "";
 
@@ -44,7 +44,7 @@ public class Tittle implements Components, Comparable<Tittle> {
 		return mapping().toString();
 	}
 
-	@Override
+
 	public HashMap<String, String> mapping(){
 		HashMap<String, String> map = new HashMap<>();
 		map.add("Tittle",tittle);
@@ -54,9 +54,6 @@ public class Tittle implements Components, Comparable<Tittle> {
 
 	@Override
 	public int compareTo(Tittle o) {
-		System.out.println(o.getTittle());
-		System.out.println(tittle);
-		System.out.println();
 		return tittle.compareTo(o.getTittle());
 	}
 

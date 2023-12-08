@@ -40,4 +40,10 @@ public class Sort{
 		Arrays.sort(data, Comparator.comparing(Task:: getDegree));
 		return new ArrayList<>(data);
 	}
+
+	public static ArrayList<Task> sortByMajor(ArrayList<Task> tasks){
+		Task[]data = copy(tasks);
+		Arrays.sort(data, Comparator.comparing(Task::getMajorLabel));
+		return new ArrayList<>(data);
+	}
 }
