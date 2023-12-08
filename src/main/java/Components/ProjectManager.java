@@ -3,7 +3,7 @@ package Components;
 import Data.WriteData;
 import Model.ArrayList;
 import Model.HashMap;
-import Service.components.Tittle;
+import Service.Tittle;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProjectManager {

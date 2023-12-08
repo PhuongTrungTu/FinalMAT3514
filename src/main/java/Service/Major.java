@@ -1,4 +1,4 @@
-package Service.components;
+package Service;
 
 import java.util.Objects;
 

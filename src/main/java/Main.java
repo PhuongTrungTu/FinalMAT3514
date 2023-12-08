@@ -1,10 +1,10 @@
 import Components.Project;
 import Components.ProjectManager;
 import Model.ArrayList;
-import Service.components.Date;
-import Service.components.Major;
-import Service.components.People;
-import Service.components.Tittle;
+import Service.Date;
+import Service.Major;
+import Service.People;
+import Service.Tittle;
 
 public class Main {
     public static void main(String[] args) {

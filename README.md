@@ -104,16 +104,15 @@ Here are some of the key features and improvements we plan to implement:
 - [x] Delete project, delete task in project
 - [x] Change status of task in project
 - [ ] Display in normal view (Table)
-- [ ] Display task of project in the more near end day of each task
+- [x] Display task of project in the more near end day of each task
 - [x] The relationship between tasks
 - [x] Pathfinding algorithm
 - [ ] Normal User interface
 - [x] Priority Level of each task
-- [ ] Priority Level of each project
 - [ ] Database for store big data
 - [ ] Stack for operation (state at time k of manager)
 - [x] manager display in console in normal mode
-- [] Automated workforce allocation for tasks. 
+- [x] Automated workforce allocation for tasks. 
 
 ### After subject
 - Mobile, web version
