@@ -110,7 +110,6 @@ Here are some of the key features and improvements we plan to implement:
 - [ ] Normal User interface
 - [x] Priority Level of each task
 - [ ] Database for store big data
-- [ ] Stack for operation (state at time k of manager)
 - [x] manager display in console in normal mode
 - [x] Automated workforce allocation for tasks. 
 
