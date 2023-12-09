@@ -5,10 +5,6 @@ import Model.Node.TreeNode;
 public class BinarySearchingTree<K extends Comparable<K>, E> {
     private TreeNode<K, E> root;
 
-    private int compare(TreeNode<K, E> node1, TreeNode<K, E> node2) {
-        return node1.getKey().compareTo(node2.getKey());
-    }
-
     private int height(TreeNode<K, E> node) {
         if (node == null) {
             return 0;

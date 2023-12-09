@@ -53,11 +53,6 @@ public class Project {
     private Map<Task, Map<Task, Integer>> graph = new HashMap<>();
 
     /**
-     * The maximum time required for any task in the project.
-     */
-    private int maxTime = 0;
-
-    /**
      * A binary search tree for efficient task retrieval.
      */
     private BinarySearchingTree<Title, Task> tree = new BinarySearchingTree<>();
@@ -99,6 +94,10 @@ public class Project {
         tree.insert(task.getTittle(), task);
     }
 
+    public void deleteTask(Task task){
+        
+    }
+
     public void addDependentTask(int task, int denpendenttask) {
         addDependentTask(tasks.get(task), tasks.get(denpendenttask));
     }
@@ -129,6 +128,10 @@ public class Project {
 
     public int maxDay() {
         ArrayList<Task> tasks = findLongestPath();
+        if (tasks.isEmpty()){
+            return 0;
+        }
+
         int sum = 0;
         for (int i = 0; i < tasks.size(); i++) {
             sum += tasks.get(i).getTime();
@@ -282,7 +285,7 @@ public class Project {
         }
 
         ArrayList<?> result = ArrayList.copy(tasks, index);
-        System.out.println(tasks);
+        System.out.println(result);
     }
 
     public void degreeDisplayStyle() {
@@ -314,16 +317,6 @@ public class Project {
             }
         }
         throw new NullPointerException("Task " + title.getTittle() + " didn't created in project");
-    }
-
-    // Kiểm tra xem danh sách người có người nào thuộc chuyên môn cụ thể không
-    private boolean containsMajor(ArrayList<People> people, Major major) {
-        for (People person : people) {
-            if (person.getMajors().contain(major)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static ArrayList<People> sortPeopleByMajor(ArrayList<People> peoples) {
