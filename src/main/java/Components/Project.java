@@ -15,12 +15,10 @@ package Components;
 
 import Model.BinarySearchingTree;
 import Model.ArrayList;
-
+import Model.HashMap;
 import Service.*;
-import Service.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.*;
 
 /**
  * Represents a project with tasks, dependencies, and various functionalities
@@ -50,7 +48,7 @@ public class Project {
     /**
      * A graph representation of task dependencies in the project.
      */
-    private Map<Task, Map<Task, Integer>> graph = new HashMap<>();
+    private HashMap<Task, HashMap<Task, Integer>> graph = new HashMap<>();
 
     /**
      * A binary search tree for efficient task retrieval.
@@ -95,7 +93,14 @@ public class Project {
     }
 
     public void deleteTask(Task task){
-        
+        tasks.remove(task);
+        for (Task task1: tasks){
+            deleteDependentTask(task1, task);
+        }
+    }
+
+    public void deleteDependentTask(Task task, Task dependent){
+        task.getDependentTasks().remove(dependent);
     }
 
     public void addDependentTask(int task, int denpendenttask) {
@@ -143,7 +148,7 @@ public class Project {
         update();
 
         // Sử dụng một map để lưu trữ tổng thời gian tốt nhất cho mỗi task
-        Map<Task, Integer> maxTimeMap = new HashMap<>();
+        HashMap<Task, Integer> maxTimeMap = new HashMap<>();
 
         // Tìm đường găng cho mỗi task
         for (Task task : tasks) {
@@ -169,7 +174,7 @@ public class Project {
     }
 
     // Phương thức đệ quy để tìm đường găng cho mỗi task
-    private int findLongestPathForTask(Task task, Map<Task, Integer> maxTimeMap) {
+    private int findLongestPathForTask(Task task, HashMap<Task, Integer> maxTimeMap) {
         // Nếu đã tính tổng thời gian cho task này rồi, trả về giá trị đã tính
         if (maxTimeMap.containsKey(task)) {
             return maxTimeMap.get(task);

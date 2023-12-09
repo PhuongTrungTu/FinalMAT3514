@@ -37,13 +37,23 @@ public class HashMap<K, E> {
 		return container.get(index).getData();
 	}
 
+	public E get(K key){
+		for (MapNode<K, E> node: container){
+			if (node.getKey().equals(key)){
+				return node.getData();
+			}
+		}
+
+		throw new NullPointerException(key + " not in map");
+	}
+
 	/**
 	 * Adds a key-value pair to the map.
 	 *
 	 * @param field the key for the key-value pair
 	 * @param data  the value for the key-value pair
 	 */
-	public void add(K field, E data) {
+	public void put(K field, E data) {
 		container.add(new MapNode<>(field, data));
 	}
 
@@ -62,5 +72,14 @@ public class HashMap<K, E> {
 			}
 		}
 		return result + "}";
+	}
+
+	public boolean containsKey(K task) {
+		for (MapNode<K, E> node: container){
+			if (node.getKey().equals(task)){
+				return true;
+			}
+		}
+		return false;
 	}
 }

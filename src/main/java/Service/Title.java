@@ -46,8 +46,8 @@ public class Title implements Comparable<Title> {
 
 	public HashMap<String, String> mapping() {
 		HashMap<String, String> map = new HashMap<>();
-		map.add("Tittle", tittle);
-		map.add("Description", description);
+		map.put("Tittle", tittle);
+		map.put("Description", description);
 		return map;
 	}
 

@@ -40,8 +40,8 @@ public class Repository {
 
     public HashMap<String, String> mapping() {
         HashMap<String, String> map = new HashMap<>();
-        map.add("Tittle", tittle);
-        map.add("link", link);
+        map.put("Tittle", tittle);
+        map.put("link", link);
         return map;
     }
 }

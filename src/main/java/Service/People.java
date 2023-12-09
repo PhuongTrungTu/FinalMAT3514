@@ -69,8 +69,8 @@ public class People {
 
     public HashMap<String, String> mapping() {
         HashMap<String, String> map = new HashMap<>();
-        map.add("Name", name);
-        map.add("Id", id);
+        map.put("Name", name);
+        map.put("Id", id);
         return map;
     }
 

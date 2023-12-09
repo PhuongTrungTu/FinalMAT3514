@@ -1,6 +1,6 @@
 package Components;
 
-import Data.WriteData;
+
 import Model.ArrayList;
 import Model.HashMap;
 import Service.Title;
@@ -75,7 +75,7 @@ public class ProjectManager {
     }
 
     public void writeData(String path) {
-        WriteData.writeDown(path, projects);
+        /*TODO*/
     }
 
     public void display() {

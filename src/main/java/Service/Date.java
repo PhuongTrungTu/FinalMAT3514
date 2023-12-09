@@ -108,9 +108,9 @@ public record Date(int day, int month, int year) implements Comparable<Date> {
 
     public HashMap<String, Integer> mapping() {
         HashMap<String, Integer> map = new HashMap<>();
-        map.add("Day", day);
-        map.add("Month", month);
-        map.add("Year", year);
+        map.put("Day", day);
+        map.put("Month", month);
+        map.put("Year", year);
         return map;
     }
 }

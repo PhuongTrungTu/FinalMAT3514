@@ -56,8 +56,8 @@ public class Label {
 
     public HashMap<String, String> mapping() {
         HashMap<String, String> map = new HashMap<>();
-        map.add("Type", type);
-        map.add("Description", description);
+        map.put("Type", type);
+        map.put("Description", description);
         return map;
     }
 
