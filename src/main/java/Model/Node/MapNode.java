@@ -4,7 +4,7 @@ public class MapNode<K, E> {
 	private K key;
 	private E data;
 
-	public MapNode(K key , E data) {
+	public MapNode(K key, E data) {
 		this.key = key;
 		this.data = data;
 	}
@@ -27,7 +27,7 @@ public class MapNode<K, E> {
 
 	@Override
 	public String toString() {
-		return  key + ":" + data;
+		return key + ":" + data;
 
 	}
 }

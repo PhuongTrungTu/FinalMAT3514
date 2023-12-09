@@ -2,18 +2,19 @@ package Service;
 
 import java.util.Objects;
 
-public class Major implements Comparable<Major>{
+public class Major implements Comparable<Major> {
 	private final String MAJOR;
 	private final int LEVEL;
-	private static final String[] majors = {"All","Back end", "Front end", "Test", "Design", "Manager"};
+	private static final String[] majors = { "All", "Back end", "Front end", "Test", "Design", "Manager" };
 	public static final int MAX = majors.length;
-	public Major(){
+
+	public Major() {
 		this.LEVEL = 0;
 		this.MAJOR = "All";
 	}
 
-	public Major(int level){
-		if (level < 0 || level >= MAX){
+	public Major(int level) {
+		if (level < 0 || level >= MAX) {
 			level = 0;
 		}
 		this.LEVEL = level;
@@ -39,10 +40,10 @@ public class Major implements Comparable<Major>{
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o){
+		if (this == o) {
 			return true;
 		}
-		if (! (o instanceof Major major)){
+		if (!(o instanceof Major major)) {
 			return false;
 		}
 		return getLEVEL() == major.getLEVEL();
@@ -50,6 +51,6 @@ public class Major implements Comparable<Major>{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMAJOR() , getLEVEL());
+		return Objects.hash(getMAJOR(), getLEVEL());
 	}
 }

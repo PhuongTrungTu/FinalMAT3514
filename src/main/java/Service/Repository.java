@@ -7,7 +7,7 @@ public class Repository {
     String link = "";
     String tittle = "";
 
-    public Repository(String link , String tittle) {
+    public Repository(String link, String tittle) {
         this.link = link;
         this.tittle = tittle;
     }
@@ -40,7 +40,7 @@ public class Repository {
 
     public HashMap<String, String> mapping() {
         HashMap<String, String> map = new HashMap<>();
-        map.add("Tittle",tittle);
+        map.add("Tittle", tittle);
         map.add("link", link);
         return map;
     }

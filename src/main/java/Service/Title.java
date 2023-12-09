@@ -5,20 +5,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
-public class Tittle implements Comparable<Tittle> {
+public class Title implements Comparable<Title> {
 	private String tittle = "Untitled";
 	private String description = "";
 
-	public Tittle(String tittle , String description) {
+	public Title(String tittle, String description) {
 		this.tittle = tittle;
 		this.description = description;
 	}
 
-	public Tittle(String tittle) {
+	public Title(String tittle) {
 		this.tittle = tittle;
 	}
 
-	public Tittle() {
+	public Title() {
 	}
 
 	@JsonProperty("tittle")
@@ -44,36 +44,35 @@ public class Tittle implements Comparable<Tittle> {
 		return mapping().toString();
 	}
 
-
-	public HashMap<String, String> mapping(){
+	public HashMap<String, String> mapping() {
 		HashMap<String, String> map = new HashMap<>();
-		map.add("Tittle",tittle);
+		map.add("Tittle", tittle);
 		map.add("Description", description);
 		return map;
 	}
 
 	@Override
-	public int compareTo(Tittle o) {
+	public int compareTo(Title o) {
 		return tittle.compareTo(o.getTittle());
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o){
+		if (this == o) {
 			return true;
 		}
-		if (! (o instanceof Tittle tittle1)){
+		if (!(o instanceof Title title1)) {
 			return false;
 		}
-		return Objects.equals(getTittle() , tittle1.getTittle());
+		return Objects.equals(getTittle(), title1.getTittle());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getTittle() , getDescription());
+		return Objects.hash(getTittle(), getDescription());
 	}
 
-	public Tittle copy() {
-		return new Tittle(tittle, description);
+	public Title copy() {
+		return new Title(tittle, description);
 	}
 }

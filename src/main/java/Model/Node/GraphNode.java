@@ -4,7 +4,7 @@ public class GraphNode<K, E> {
 	K key;
 	E data;
 
-	public GraphNode(K key , E data) {
+	public GraphNode(K key, E data) {
 		this.key = key;
 		this.data = data;
 	}

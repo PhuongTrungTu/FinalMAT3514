@@ -8,30 +8,30 @@ public class TreeNode<K extends Comparable<K>, E> {
 	private TreeNode<K, E> left;
 	private TreeNode<K, E> right;
 
-	public TreeNode(K key , ArrayList<E> data) {
+	public TreeNode(K key, ArrayList<E> data) {
 		this.key = key;
 		this.data = data;
 	}
 
-	public TreeNode(K key, E data){
+	public TreeNode(K key, E data) {
 		this.key = key;
 		this.data.add(data);
 	}
 
-	public TreeNode(K key , ArrayList<E> data , TreeNode<K,E> left , TreeNode<K,E> right) {
+	public TreeNode(K key, ArrayList<E> data, TreeNode<K, E> left, TreeNode<K, E> right) {
 		this.key = key;
 		this.data = data;
 		this.left = left;
 		this.right = right;
 	}
 
-	public TreeNode(K key , ArrayList<E> data , TreeNode<K,E> left) {
+	public TreeNode(K key, ArrayList<E> data, TreeNode<K, E> left) {
 		this.key = key;
 		this.data = data;
 		this.left = left;
 	}
 
-	public TreeNode(TreeNode<K,E> right, K key , ArrayList<E> data ) {
+	public TreeNode(TreeNode<K, E> right, K key, ArrayList<E> data) {
 		this.key = key;
 		this.data = data;
 		this.right = right;
@@ -53,19 +53,19 @@ public class TreeNode<K extends Comparable<K>, E> {
 		this.data = data;
 	}
 
-	public TreeNode<K,E> getLeft() {
+	public TreeNode<K, E> getLeft() {
 		return left;
 	}
 
-	public void setLeft(TreeNode<K,E> left) {
+	public void setLeft(TreeNode<K, E> left) {
 		this.left = left;
 	}
 
-	public TreeNode<K,E> getRight() {
+	public TreeNode<K, E> getRight() {
 		return right;
 	}
 
-	public void setRight(TreeNode<K,E> right) {
+	public void setRight(TreeNode<K, E> right) {
 		this.right = right;
 	}
 

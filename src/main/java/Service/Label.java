@@ -9,10 +9,12 @@ public class Label {
 
     public Label() {
     }
-    final String[] TYPES = {"Back end", "Front End", "Testing",
-            "Design", "Marketing", "Development", "Untyped"};
-    public Label(int level){
-        if (level < 0 || level >= TYPES.length){
+
+    final String[] TYPES = { "Back end", "Front End", "Testing",
+            "Design", "Marketing", "Development", "Untyped" };
+
+    public Label(int level) {
+        if (level < 0 || level >= TYPES.length) {
             level = TYPES.length - 1;
         }
 
@@ -24,7 +26,7 @@ public class Label {
         this.type = type;
     }
 
-    public Label(String type , String description) {
+    public Label(String type, String description) {
         this.type = type;
         this.description = description;
     }
@@ -33,7 +35,6 @@ public class Label {
     public String getType() {
         return type;
     }
-
 
     public void setType(String type) {
         this.type = type;
@@ -60,7 +61,7 @@ public class Label {
         return map;
     }
 
-	public Label copy() {
+    public Label copy() {
         return new Label(this.type, description);
-	}
+    }
 }

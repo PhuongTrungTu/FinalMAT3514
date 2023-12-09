@@ -4,28 +4,27 @@ import Model.ArrayList;
 import Service.Date;
 import Service.Major;
 import Service.People;
-import Service.Tittle;
+import Service.Title;
 
 public class Main {
     public static void main(String[] args) {
         ProjectManager manager = ProjectManager.getInstance();
-        Tittle tittle = new Tittle();
-        manager.createNewProject(tittle);
+        Title title = new Title();
+        manager.createNewProject(title);
 
-        Project project1 = manager.getProject(tittle);
+        Project project1 = manager.getProject(title);
 
         project1.createNewTask(2);
         project1.createNewTask("Design");
         project1.createNewTask(3);
         project1.get(1).setTime(5);
 
-
-        project1.search("Untitled").setTittle(new Tittle("Making User interface"));
-        project1.search("Untitled").setTittle(new Tittle("Test"));
+        project1.search("Untitled").setTittle(new Title("Making User interface"));
+        project1.search("Untitled").setTittle(new Title("Test"));
 
         project1.addDependentTask("Design", "Making User interface");
-        project1.search("Design").setStartDay(new Date(1,1,2023));
-        project1.search("Design").setEndDay(new Date(3,1,2023));
+        project1.search("Design").setStartDay(new Date(1, 1, 2023));
+        project1.search("Design").setEndDay(new Date(3, 1, 2023));
         project1.search("Design").setTime(10);
         project1.search("Design").setMajorLabel(new Major(4));
 
@@ -46,7 +45,6 @@ public class Main {
 
         project1.update();
         manager.display();
-
 
     }
 }

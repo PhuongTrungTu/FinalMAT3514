@@ -1,3 +1,16 @@
+/**
+ * The {@code Project} class represents a project with tasks, dependencies, and various functionalities
+ * for task management and assignment. It includes methods for task creation, dependency management,
+ * progress tracking, sorting, and display styles.
+ *
+ * <p>This class utilizes a binary search tree for efficient task retrieval and manipulation.</p>
+ *
+ * <p>Instances of this class can be created with a title, a list of tasks, a label, and a repository.</p>
+ *
+ * @author Grizmo
+ * @version 1.0
+ */
+
 package Components;
 
 import Model.BinarySearchingTree;
@@ -9,39 +22,73 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
 
+/**
+ * Represents a project with tasks, dependencies, and various functionalities
+ * for task management and assignment.
+ */
 public class Project {
-    private Tittle tittle = new Tittle("");
-    private ArrayList<Task> tasks = new ArrayList<>();
-    private Label label = new Label();
-    private Repository repository = new Repository("" , "");
-    private Map<Task,Map<Task, Integer>> graph = new HashMap<>();
-    private int maxTime = 0;
-    private BinarySearchingTree<Tittle, Task> tree = new BinarySearchingTree<>();
+    /**
+     * The title of the project.
+     */
+    private Title title = new Title("");
 
+    /**
+     * The list of tasks in the project.
+     */
+    private ArrayList<Task> tasks = new ArrayList<>();
+
+    /**
+     * The label associated with the project.
+     */
+    private Label label = new Label();
+
+    /**
+     * The repository associated with the project.
+     */
+    private Repository repository = new Repository("", "");
+
+    /**
+     * A graph representation of task dependencies in the project.
+     */
+    private Map<Task, Map<Task, Integer>> graph = new HashMap<>();
+
+    /**
+     * The maximum time required for any task in the project.
+     */
+    private int maxTime = 0;
+
+    /**
+     * A binary search tree for efficient task retrieval.
+     */
+    private BinarySearchingTree<Title, Task> tree = new BinarySearchingTree<>();
+
+    /**
+     * Default constructor for the {@code Project} class.
+     */
     public Project() {
     }
 
-    public Project(Tittle tittle , ArrayList<Task> tasks , Label label , Repository repository) {
-        this.tittle = tittle;
+    public Project(Title title, ArrayList<Task> tasks, Label label, Repository repository) {
+        this.title = title;
         this.tasks = tasks;
         this.label = label;
         this.repository = repository;
     }
 
-    public Project(Tittle tittle) {
-        this.tittle = tittle;
+    public Project(Title title) {
+        this.title = title;
         this.tasks = new ArrayList<>();
         this.label = new Label();
         this.repository = new Repository();
     }
 
-    public void createNewTask(int type){
+    public void createNewTask(int type) {
         Task task = new Task(type);
         task.setMajorLabel(new Major(type));
         addTask(task);
     }
 
-    public void createNewTask(String tittle){
+    public void createNewTask(String tittle) {
         Task task = new Task(tittle);
         addTask(task);
     }
@@ -52,20 +99,21 @@ public class Project {
         tree.insert(task.getTittle(), task);
     }
 
-    public void addDependentTask(int task, int denpendenttask){
+    public void addDependentTask(int task, int denpendenttask) {
         addDependentTask(tasks.get(task), tasks.get(denpendenttask));
     }
 
-    public void addDependentTask(String task1, String task2){
-        addDependentTask(search(task1),  search(task2));
+    public void addDependentTask(String task1, String task2) {
+        addDependentTask(search(task1), search(task2));
     }
 
-    public void addDependentTask(Task task1, Task task2){
-        if (!tasks.contain(task1) && !tasks.contain(task2)){
-            throw new IllegalArgumentException(task1.getTittle().getTittle() + ", " + task2.getTittle() + "are not in project!");
-        } else if (!tasks.contain(task1)){
+    public void addDependentTask(Task task1, Task task2) {
+        if (!tasks.contain(task1) && !tasks.contain(task2)) {
+            throw new IllegalArgumentException(
+                    task1.getTittle().getTittle() + ", " + task2.getTittle() + "are not in project!");
+        } else if (!tasks.contain(task1)) {
             addTask(task1);
-        } else if (! tasks.contain(task2)){
+        } else if (!tasks.contain(task2)) {
             addTask(task2);
         }
         graph.get(task1).put(task2, task1.getTime());
@@ -73,20 +121,21 @@ public class Project {
         task1.addDependentTask(task2);
     }
 
-    public void update(){
-        for (int i = 0; i < tasks.size(); i++){
+    public void update() {
+        for (int i = 0; i < tasks.size(); i++) {
             tasks.get(i).updateProgress();
         }
     }
 
-    public int maxDay(){
+    public int maxDay() {
         ArrayList<Task> tasks = findLongestPath();
         int sum = 0;
-        for (int i = 0; i < tasks.size(); i++){
+        for (int i = 0; i < tasks.size(); i++) {
             sum += tasks.get(i).getTime();
         }
         return sum;
     }
+
     public ArrayList<Task> findLongestPath() {
         update();
 
@@ -131,7 +180,8 @@ public class Project {
             maxPathTime = Math.max(maxPathTime, pathTime);
         }
 
-        // Tổng thời gian cho task hiện tại là tổng thời gian của tất cả các task phụ thuộc cộng với thời gian của task hiện tại
+        // Tổng thời gian cho task hiện tại là tổng thời gian của tất cả các task phụ
+        // thuộc cộng với thời gian của task hiện tại
         maxTimeMap.put(task, maxPathTime + task.getTime());
 
         return maxTimeMap.get(task);
@@ -146,13 +196,13 @@ public class Project {
         }
     }
 
-    public void deleteDependentTask(int id, int dependent){
+    public void deleteDependentTask(int id, int dependent) {
         tasks.get(id).deleteDependent(tasks.get(dependent));
     }
 
     public void removeTask(Task task) {
         tasks.remove(task);
-        for (int i = 0; i < tasks.size(); i++){
+        for (int i = 0; i < tasks.size(); i++) {
             tasks.get(i).getDependentTasks().remove(task);
         }
     }
@@ -166,12 +216,12 @@ public class Project {
     }
 
     @JsonProperty("tittle")
-    public Tittle getTittle() {
-        return tittle;
+    public Title getTittle() {
+        return title;
     }
 
-    public void setTittle(Tittle tittle) {
-        this.tittle = tittle;
+    public void setTittle(Title title) {
+        this.title = title;
     }
 
     @JsonProperty("tasks")
@@ -201,30 +251,31 @@ public class Project {
         this.repository = repository;
     }
 
-    public void sortByTittle(){
+    public void sortByTittle() {
         tasks = Sort.sort(tasks);
     }
 
-    public void sortByDay(){
+    public void sortByDay() {
         tasks = Sort.sortByDay(tasks);
     }
 
-    public void sortByTime(){
+    public void sortByTime() {
         tasks = Sort.sortByTime(tasks);
     }
 
-    public void sortByDegree(){
+    public void sortByDegree() {
         tasks = Sort.sortByDegree(tasks);
     }
 
-    public void sortByMajor(){
+    public void sortByMajor() {
         tasks = Sort.sortByMajor(tasks);
     }
-    public void roadMapDisplayStyle(){
+
+    public void roadMapDisplayStyle() {
         sortByDay();
         int index = 0;
-        for (int i = 0; i < getTasks().size(); i++){
-            if(tasks.get(i).getEndDay().compareTo(Date.today()) >= 0){
+        for (int i = 0; i < getTasks().size(); i++) {
+            if (tasks.get(i).getEndDay().compareTo(Date.today()) >= 0) {
                 index = i;
                 break;
             }
@@ -234,35 +285,35 @@ public class Project {
         System.out.println(tasks);
     }
 
-    public void degreeDisplayStyle(){
+    public void degreeDisplayStyle() {
         sortByDegree();
         System.out.println(tasks);
     }
 
     public void display() {
-        for (int i = 0; i < tasks().size(); i++){
+        for (int i = 0; i < tasks().size(); i++) {
             System.out.println("Task: " + (i + 1));
             tasks.get(i).display();
         }
         System.out.println("************************");
     }
 
-    public Task search(String tittle){
-        for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).getTittle().getTittle().equals(tittle)){
+    public Task search(String tittle) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTittle().getTittle().equals(tittle)) {
                 return tasks.get(i);
             }
         }
         throw new NullPointerException("Task " + tittle + " didn't created in project");
     }
 
-    public Task search(Tittle tittle){
-        for (int i = 0; i < tasks.size(); i++){
-            if (tasks.get(i).getTittle().equals(tittle)){
+    public Task search(Title title) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTittle().equals(title)) {
                 return tasks.get(i);
             }
         }
-        throw new NullPointerException("Task " + tittle.getTittle() + " didn't created in project");
+        throw new NullPointerException("Task " + title.getTittle() + " didn't created in project");
     }
 
     // Kiểm tra xem danh sách người có người nào thuộc chuyên môn cụ thể không
@@ -275,21 +326,21 @@ public class Project {
         return false;
     }
 
-    public static ArrayList<People> sortPeopleByMajor(ArrayList<People> peoples){
+    public static ArrayList<People> sortPeopleByMajor(ArrayList<People> peoples) {
         ArrayList<People> result = new ArrayList<>();
         ArrayList<ArrayList<People>> container = new ArrayList<>();
-        for (int i = 0; i < Major.MAX; i++){
+        for (int i = 0; i < Major.MAX; i++) {
             container.add(new ArrayList<>());
         }
-        for (People people: peoples){
-            for(int j = 0; j < container.size(); j++){
-                if (people.getMajors().contain(new Major(j))){
+        for (People people : peoples) {
+            for (int j = 0; j < container.size(); j++) {
+                if (people.getMajors().contain(new Major(j))) {
                     container.get(j).add(people);
                 }
             }
         }
 
-        for (int i = 0; i < container.size(); i++){
+        for (int i = 0; i < container.size(); i++) {
             result.addAll(container.get(i));
         }
         return result;
@@ -317,6 +368,5 @@ public class Project {
             }
         }
     }
-
 
 }
