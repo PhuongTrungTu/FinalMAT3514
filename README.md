@@ -87,11 +87,11 @@ Always use the latest versions from the Maven central repository for jackson-dat
 
 This is Package Diagram show relation of packages
 
-![PackageDiagram.png](PackageDiagram.png)
+![PackageDiagram.png](image/PackageDiagram.png)
 
 This is Class Diagram show relation of class
 
-![ClassDiagram.png](ClassDiagram.png)
+![ClassDiagram.png](image/ClassDiagram.png)
 
 <!-- ROADMAP -->
 ## Future Plans
