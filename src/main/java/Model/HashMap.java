@@ -37,15 +37,23 @@ public class HashMap<K, E> {
 		return container.get(index).getData();
 	}
 
-	public E get(K key){
-		for (MapNode<K, E> node: container){
-			if (node.getKey().equals(key)){
+	/**
+	 * Retrieves the data associated with a specified key in the map.
+	 *
+	 * @param key The key for which the associated data is to be retrieved.
+	 * @return The data associated with the specified key.
+	 * @throws NullPointerException If the key is not found in the map.
+	 */
+	public E get(K key) {
+		for (MapNode<K, E> node : container) {
+			if (node.getKey().equals(key)) {
 				return node.getData();
 			}
 		}
 
 		throw new NullPointerException(key + " not in map");
 	}
+
 
 	/**
 	 * Adds a key-value pair to the map.
@@ -81,5 +89,22 @@ public class HashMap<K, E> {
 			}
 		}
 		return false;
+	}
+
+	public void remove(K key){
+		for (MapNode<K, E> node: container){
+			if (node.getKey().equals(key)){
+				container.remove(node);
+			}
+		}
+	}
+
+	public void remove(K key, E data){
+		for (MapNode<K, E> node: container){
+			if (node.getKey().equals(key) && node.getData().equals(data)){
+				container.remove(node);
+				return;
+			}
+		}
 	}
 }

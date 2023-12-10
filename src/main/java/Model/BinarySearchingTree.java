@@ -127,6 +127,10 @@ public class BinarySearchingTree<K extends Comparable<K>, E> {
         return deleteInSubTree(root, new TreeNode<>(key, data));
     }
 
+    public TreeNode<K, E> delete(K key){
+        return deleteInSubTree(root, new TreeNode<>(key, null));
+    }
+
     private TreeNode<K, E> deleteInSubTree(TreeNode<K, E> root, TreeNode<K, E> node) {
         if (root == null) {
             return null;
