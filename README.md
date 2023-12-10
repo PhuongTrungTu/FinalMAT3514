@@ -94,13 +94,13 @@ We have an exciting roadmap for the future development of this project.
 Here are some of the key features and improvements we plan to implement:
 
 ### Subject Roadmap
-- [x] All structure using in project
+- [x] All using structure in project
 - [x] Create components in Project
-- [x] Writing and reading json file
-- [x] Store data using ```Jackson ObjectMapper```
+- [ ] Writing and reading json file
+- [ ] Store data using ```Jackson ObjectMapper```
 - [x] Create new project
 - [x] Create new task for project
-- [x] Search project
+- [x] Searching project
 - [x] Delete project, delete task in project
 - [x] Change status of task in project
 - [ ] Display in normal view (Table)
