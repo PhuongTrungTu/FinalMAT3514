@@ -250,7 +250,7 @@ public class Task implements Comparable<Task> {
             assignments.add(people);
             people.assign(this);
         } else {
-            System.out.println("Can't assign " + title.getTittle() + " for " + people.getName());
+            System.out.println("Can't assign " + title.getTitle() + " for " + people.getName());
         }
     }
 
@@ -494,7 +494,7 @@ public class Task implements Comparable<Task> {
      */
     @Override
     public String toString() {
-        return "Tittle: " + title.getTittle() + "\n" +
+        return "Tittle: " + title.getTitle() + "\n" +
                 "Start day: " + getStartDay() + "\n" +
                 "End day: " + getEndDay() + "\n" +
                 "Assign: " + getAssignments() + "\n" +
@@ -506,7 +506,7 @@ public class Task implements Comparable<Task> {
      * Displays information about the task.
      */
     public void display() {
-        System.out.println("Tittle: " + title.getTittle());
+        System.out.println("Tittle: " + title.getTitle());
         System.out.println("Start day: " + getStartDay());
         System.out.println("End day: " + getEndDay());
         System.out.println("Assign: " + getAssignments());

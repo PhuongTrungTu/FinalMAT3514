@@ -51,15 +51,6 @@ public class Major implements Comparable<Major> {
 	}
 
 	/**
-	 * Creates a copy of this major.
-	 *
-	 * @return A new Major object with the same level.
-	 */
-	public Major copy() {
-		return new Major(getLEVEL());
-	}
-
-	/**
 	 * Compares this Major to another Major based on their levels.
 	 *
 	 * @param o The Major to compare to.

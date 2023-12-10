@@ -61,7 +61,7 @@ public class ProjectManager {
      */
     public void deleteProject(String title) {
         for (int i = 0; i < projects.size(); i++) {
-            if (projects.get(i).getTittle().getTittle().equalsIgnoreCase(title)) {
+            if (projects.get(i).getTittle().getTitle().equalsIgnoreCase(title)) {
                 projects.remove(i);
             }
         }
@@ -109,7 +109,7 @@ public class ProjectManager {
      */
     public Project getProject(String title) {
         for (int i = 0; i < projects.size(); i++) {
-            if (projects.get(i).getTittle().getTittle().equalsIgnoreCase(title)) {
+            if (projects.get(i).getTittle().getTitle().equalsIgnoreCase(title)) {
                 return projects.get(i);
             }
         }
@@ -150,7 +150,7 @@ public class ProjectManager {
      */
     public void display() {
         for (int i = 0; i < projects.size(); i++) {
-            System.out.println("Project " + (i + 1) + ": " + projects.get(i).getTittle().getTittle());
+            System.out.println("Project " + (i + 1) + ": " + projects.get(i).getTittle().getTitle());
             System.out.println("Number task: " + projects.get(i).tasks().size());
             projects.get(i).display();
             System.out.println();

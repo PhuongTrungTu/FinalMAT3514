@@ -85,7 +85,13 @@ Always use the latest versions from the Maven central repository for jackson-dat
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+This is Package Diagram show relation of packages
 
+![PackageDiagram.png](PackageDiagram.png)
+
+This is Class Diagram show relation of class
+
+![ClassDiagram.png](ClassDiagram.png)
 
 <!-- ROADMAP -->
 ## Future Plans

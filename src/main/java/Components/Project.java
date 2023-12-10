@@ -186,7 +186,7 @@ public class Project {
     public void addDependentTask(Task task1, Task task2) {
         if (!tasks.contain(task1) && !tasks.contain(task2)) {
             throw new IllegalArgumentException(
-                    task1.getTitle().getTittle() + ", " + task2.getTitle() + "are not in project!");
+                    task1.getTitle().getTitle() + ", " + task2.getTitle() + "are not in project!");
         } else if (!tasks.contain(task1)) {
             addTask(task1);
         } else if (!tasks.contain(task2)) {
@@ -501,7 +501,7 @@ public class Project {
      */
     public Task search(String title) {
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getTitle().getTittle().equals(title)) {
+            if (tasks.get(i).getTitle().getTitle().equals(title)) {
                 return tasks.get(i);
             }
         }
@@ -521,7 +521,7 @@ public class Project {
                 return tasks.get(i);
             }
         }
-        throw new NullPointerException("Task " + title.getTittle() + " didn't created in project");
+        throw new NullPointerException("Task " + title.getTitle() + " didn't created in project");
     }
 
     /**
