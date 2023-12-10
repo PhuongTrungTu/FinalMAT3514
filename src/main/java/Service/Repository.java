@@ -12,7 +12,9 @@ public class Repository {
         this.tittle = tittle;
     }
 
-    public Repository() {
+    public Repository(String link) {
+        this.link = link;
+        this.tittle = link;
     }
 
     @JsonProperty("link")

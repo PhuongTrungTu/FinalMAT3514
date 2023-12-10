@@ -85,7 +85,7 @@ public class Project {
         this.title = title;
         this.tasks = new ArrayList<>();
         this.label = new Label();
-        this.repository = new Repository();
+        this.repository = new Repository("");
     }
 
     /**
