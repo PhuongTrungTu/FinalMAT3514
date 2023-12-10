@@ -213,7 +213,19 @@ public class BinarySearchingTree<K extends Comparable<K>, E> {
      * @return The root of the updated tree.
      */
     public TreeNode<K, E> delete(K key, E data) {
-        return deleteInSubTree(root, new TreeNode<>(key, data));
+        ArrayList<E> container = search(key);
+        if (container.size() == 0){
+            return null;
+        } else if (container.size() == 1){
+            return delete(key);
+        }
+        for(E temp: container){
+            if (temp.equals(data)){
+                container.remove(data);
+                return new TreeNode<>(key, data);
+            }
+        }
+        return null;
     }
 
     /**
@@ -256,27 +268,6 @@ public class BinarySearchingTree<K extends Comparable<K>, E> {
         }
 
         return balanceNode(root);
-    }
-
-    /**
-     * Prints the tree.
-     */
-    public void print() {
-        printSubTree(root);
-        System.out.println();
-    }
-
-    /**
-     * Prints a specific subtree.
-     *
-     * @param p The root of the subtree to print.
-     */
-    public void printSubTree(TreeNode<K, E> p) {
-        if (p != null) {
-            printSubTree(p.getLeft());
-            System.out.print(p.getData() + " ");
-            printSubTree(p.getRight());
-        }
     }
 
     /**

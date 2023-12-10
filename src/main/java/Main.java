@@ -19,8 +19,8 @@ public class Main {
         project1.createNewTask(3);
         project1.get(1).setTime(5);
 
-        project1.search("Untitled").setTitle(new Title("Making User interface"));
-        project1.search("Untitled").setTitle(new Title("Test"));
+        project1.setTaskTitle(project1.search("Untitled"),new Title("Making User interface"));
+        project1.setTaskTitle(project1.search("Untitled"), new Title("Test"));
 
         project1.addDependentTask("Design", "Making User interface");
         project1.search("Design").setStartDay(new Date(1, 1, 2023));

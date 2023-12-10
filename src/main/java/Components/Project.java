@@ -583,4 +583,10 @@ public class Project {
             }
         }
     }
+
+    public void setTaskTitle(Task task,Title title){
+        tree.delete(task.getTitle(),task);
+        task.setTitle(title);
+        tree.insert(title, task);
+    }
 }
