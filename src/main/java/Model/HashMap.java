@@ -82,26 +82,44 @@ public class HashMap<K, E> {
 		return result + "}";
 	}
 
-	public boolean containsKey(K task) {
-		for (MapNode<K, E> node: container){
-			if (node.getKey().equals(task)){
+	/**
+	 * Checks if the map contains a specific key.
+	 *
+	 * @param key The key to check for existence in the map.
+	 * @return {@code true} if the map contains the key, {@code false} otherwise.
+	 */
+	public boolean containsKey(K key) {
+		for (MapNode<K, E> node : container) {
+			if (node.getKey().equals(key)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void remove(K key){
-		for (MapNode<K, E> node: container){
-			if (node.getKey().equals(key)){
+	/**
+	 * Removes the first occurrence of the specified key from the map.
+	 *
+	 * @param key The key to be removed from the map.
+	 */
+	public void remove(K key) {
+		for (MapNode<K, E> node : container) {
+			if (node.getKey().equals(key)) {
 				container.remove(node);
+				return;
 			}
 		}
 	}
 
-	public void remove(K key, E data){
-		for (MapNode<K, E> node: container){
-			if (node.getKey().equals(key) && node.getData().equals(data)){
+	/**
+	 * Removes the first occurrence of the specified key-value pair from the map.
+	 *
+	 * @param key  The key of the pair to be removed.
+	 * @param data The value of the pair to be removed.
+	 */
+	public void remove(K key, E data) {
+		for (MapNode<K, E> node : container) {
+			if (node.getKey().equals(key) && node.getData().equals(data)) {
 				container.remove(node);
 				return;
 			}
