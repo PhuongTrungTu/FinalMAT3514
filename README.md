@@ -93,6 +93,9 @@ This is Class Diagram show relation of class
 
 ![ClassDiagram.png](image/ClassDiagram.png)
 
+Database Diagram
+![Database.png](image/Database.png)
+
 <!-- ROADMAP -->
 ## Future Plans
 
