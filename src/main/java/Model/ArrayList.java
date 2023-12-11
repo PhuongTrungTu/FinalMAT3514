@@ -10,270 +10,270 @@ import java.util.Iterator;
  * @param <E> the type of elements in the list
  */
 public class ArrayList<E> implements Iterable<E> {
-    private E[] containers = ((E[]) new Object[100]);
-    private int size = 0;
+	private E[] containers = ((E[]) new Object[100]);
+	private int size = 0;
 
-    /**
-     * Constructs an empty ArrayList with an initial capacity of 100.
-     */
-    public ArrayList() {
-    }
+	/**
+	 * Constructs an empty ArrayList with an initial capacity of 100.
+	 */
+	public ArrayList() {
+	}
 
-    /**
-     * Constructs an ArrayList with the specified array of elements.
-     * Automatically expands the capacity if needed.
-     *
-     * @param containers the array of elements to initialize the list
-     */
-    public ArrayList(E[] containers) {
-        this.containers = containers;
-        size = containers.length;
-        expand();
-    }
+	/**
+	 * Constructs an ArrayList with the specified array of elements.
+	 * Automatically expands the capacity if needed.
+	 *
+	 * @param containers the array of elements to initialize the list
+	 */
+	public ArrayList(E[] containers) {
+		this.containers = containers;
+		size = containers.length;
+		expand();
+	}
 
-    /**
-     * Expands the capacity of the list by creating a new array with
-     * 5 times the current size and copying the elements.
-     */
-    private void expand() {
-        E[] temp = ((E[]) new Object[size * 5]);
-        System.arraycopy(containers, 0, temp, 0, size);
-        containers = temp;
-    }
+	/**
+	 * Static method to copy elements from the specified index to the end of the
+	 * list.
+	 *
+	 * @param array the source ArrayList
+	 * @param start the index from which to start copying
+	 * @return a new ArrayList containing the copied elements
+	 */
+	public static ArrayList<?> copy(ArrayList<?> array , int start) {
+		ArrayList<?> result = new ArrayList<>();
+		for (int i = start; i < array.size; i++){
+			result.addPrivate(array.get(i));
+		}
 
-    /**
-     * Adds an element to the end of the list. Automatically expands
-     * the capacity if needed.
-     *
-     * @param data the element to be added
-     */
-    public void add(E data) {
-        containers[size] = data;
-        if (size >= containers.length - 26) {
-            expand();
-        }
-        size++;
-    }
+		return result;
+	}
 
-    /**
-     * Inserts an element at the specified index. Shifts the subsequent
-     * elements to the right. Automatically expands the capacity if needed.
-     *
-     * @param data  the element to be inserted
-     * @param index the index at which the element is to be inserted
-     */
-    public void insert(E data, int index) {
-        for (int i = size; i > index; i--) {
-            containers[i] = containers[i - 1];
-        }
-        containers[index] = data;
-        size++;
+	/**
+	 * Expands the capacity of the list by creating a new array with
+	 * 5 times the current size and copying the elements.
+	 */
+	private void expand() {
+		E[] temp = ((E[]) new Object[size * 5]);
+		System.arraycopy(containers , 0 , temp , 0 , size);
+		containers = temp;
+	}
 
-        if (size >= containers.length - 26) {
-            expand();
-        }
-    }
+	/**
+	 * Adds an element to the end of the list. Automatically expands
+	 * the capacity if needed.
+	 *
+	 * @param data the element to be added
+	 */
+	public void add(E data) {
+		containers[size] = data;
+		if (size >= containers.length - 26){
+			expand();
+		}
+		size++;
+	}
 
-    /**
-     * Removes the first occurrence of the specified element from the list.
-     *
-     * @param value the element to be removed
-     */
-    public void remove(E value) {
-        for (int i = 0; i < size; i++) {
-            if (containers[i].equals(value)) {
-                remove(i);
-                i--;
-            }
-        }
-    }
+	/**
+	 * Inserts an element at the specified index. Shifts the subsequent
+	 * elements to the right. Automatically expands the capacity if needed.
+	 *
+	 * @param data  the element to be inserted
+	 * @param index the index at which the element is to be inserted
+	 */
+	public void insert(E data , int index) {
+		for (int i = size; i > index; i--){
+			containers[i] = containers[i - 1];
+		}
+		containers[index] = data;
+		size++;
 
-    /**
-     * Removes the element at the specified index from the list.
-     *
-     * @param index the index of the element to be removed
-     */
-    public void remove(int index) {
-        if ((index >= size || index < 0) && getClassName().equalsIgnoreCase("Integer")) {
-            remove(index);
-        } else if ((index >= size || index < 0)) {
-            throw new IndexOutOfBoundsException();
-        }
-        for (int i = index; i < size; i++) {
-            containers[i] = containers[i + 1];
-        }
-        size--;
-    }
+		if (size >= containers.length - 26){
+			expand();
+		}
+	}
 
-    /**
-     * Returns the number of elements in the list.
-     *
-     * @return the number of elements in the list
-     */
-    public int size() {
-        return size;
-    }
+	/**
+	 * Removes the first occurrence of the specified element from the list.
+	 *
+	 * @param value the element to be removed
+	 */
+	public void remove(E value) {
+		for (int i = 0; i < size; i++){
+			if (containers[i].equals(value)){
+				remove(i);
+				i--;
+			}
+		}
+	}
 
-    /**
-     * Returns a string representation of the list.
-     *
-     * @return a string representation of the list
-     */
-    @Override
-    public String toString() {
-        StringBuilder result = new StringBuilder("[");
-        for (int i = 0; i < size; i++) {
-            result.append(containers[i]);
-            if (i < size - 1) {
-                result.append(", ");
-            }
-        }
-        return result.append("]").toString();
-    }
+	/**
+	 * Removes the element at the specified index from the list.
+	 *
+	 * @param index the index of the element to be removed
+	 */
+	public void remove(int index) {
+		if ((index >= size || index < 0) && getClassName().equalsIgnoreCase("Integer")){
+			remove(index);
+		} else if ((index >= size || index < 0)){
+			throw new IndexOutOfBoundsException();
+		}
+		for (int i = index; i < size; i++){
+			containers[i] = containers[i + 1];
+		}
+		size--;
+	}
 
-    /**
-     * Returns the element at the specified index.
-     *
-     * @param index the index of the element to be retrieved
-     * @return the element at the specified index
-     */
-    public E get(int index) {
-        return containers[index];
-    }
+	/**
+	 * Returns the number of elements in the list.
+	 *
+	 * @return the number of elements in the list
+	 */
+	public int size() {
+		return size;
+	}
 
-    /**
-     * Returns the class name of the elements in the list.
-     *
-     * @return the class name of the elements in the list
-     */
-    public String getClassName() {
-        if (containers[0] == null) {
-            return "Components";
-        }
-        return containers[0].getClass().getSimpleName();
-    }
+	/**
+	 * Returns a string representation of the list.
+	 *
+	 * @return a string representation of the list
+	 */
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder("[");
+		for (int i = 0; i < size; i++){
+			result.append(containers[i]);
+			if (i < size - 1){
+				result.append(", ");
+			}
+		}
+		return result.append("]").toString();
+	}
 
-    /**
-     * Sets the element at the specified index to the specified value.
-     *
-     * @param index the index of the element to be set
-     * @param data  the value to set
-     */
-    public void set(int index, E data) {
-        containers[index] = data;
-    }
+	/**
+	 * Returns the element at the specified index.
+	 *
+	 * @param index the index of the element to be retrieved
+	 * @return the element at the specified index
+	 */
+	public E get(int index) {
+		return containers[index];
+	}
 
-    /**
-     * Converts the list to an array.
-     *
-     * @return an array containing all the elements in the list
-     */
-    @JsonProperty("List")
-    public E[] toArray() {
-        E[] result = (E[]) new Object[size];
-        System.arraycopy(containers, 0, result, 0, size);
-        return result;
-    }
+	/**
+	 * Returns the class name of the elements in the list.
+	 *
+	 * @return the class name of the elements in the list
+	 */
+	public String getClassName() {
+		if (containers[0] == null){
+			return "Components";
+		}
+		return containers[0].getClass().getSimpleName();
+	}
 
-    /**
-     * Checks if the list contains the specified element.
-     *
-     * @param data the element to be checked
-     * @return true if the list contains the element, false otherwise
-     */
-    public boolean contain(E data) {
-        for (int i = 0; i < size; i++) {
-            if (containers[i].equals(data)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * Sets the element at the specified index to the specified value.
+	 *
+	 * @param index the index of the element to be set
+	 * @param data  the value to set
+	 */
+	public void set(int index , E data) {
+		containers[index] = data;
+	}
 
-    /**
-     * Creates a shallow copy of the list.
-     *
-     * @return a new ArrayList with the same elements as this list
-     */
-    public ArrayList<E> copy() {
-        E[] container = (E[]) (new Object[size]);
-        System.arraycopy(this.containers, 0, container, 0, size);
-        return new ArrayList<>(container);
-    }
+	/**
+	 * Converts the list to an array.
+	 *
+	 * @return an array containing all the elements in the list
+	 */
+	@JsonProperty("List")
+	public E[] toArray() {
+		E[] result = (E[]) new Object[size];
+		System.arraycopy(containers , 0 , result , 0 , size);
+		return result;
+	}
 
-    /**
-     * Private method to add an element to the list without exposing it publicly.
-     *
-     * @param data the element to be added
-     */
-    private void addPrivate(Object data) {
-        if (size >= containers.length - 5) {
-            expand();
-        }
-        containers[size] = (E) data;
-        size++;
-    }
+	/**
+	 * Checks if the list contains the specified element.
+	 *
+	 * @param data the element to be checked
+	 * @return true if the list contains the element, false otherwise
+	 */
+	public boolean contain(E data) {
+		for (int i = 0; i < size; i++){
+			if (containers[i].equals(data)){
+				return true;
+			}
+		}
+		return false;
+	}
 
-    /**
-     * Static method to copy elements from the specified index to the end of the
-     * list.
-     *
-     * @param array the source ArrayList
-     * @param start the index from which to start copying
-     * @return a new ArrayList containing the copied elements
-     */
-    public static ArrayList<?> copy(ArrayList<?> array, int start) {
-        ArrayList<?> result = new ArrayList<>();
-        for (int i = start; i < array.size; i++) {
-            result.addPrivate(array.get(i));
-        }
+	/**
+	 * Creates a shallow copy of the list.
+	 *
+	 * @return a new ArrayList with the same elements as this list
+	 */
+	public ArrayList<E> copy() {
+		E[] container = (E[]) (new Object[size]);
+		System.arraycopy(this.containers , 0 , container , 0 , size);
+		return new ArrayList<>(container);
+	}
 
-        return result;
-    }
+	/**
+	 * Private method to add an element to the list without exposing it publicly.
+	 *
+	 * @param data the element to be added
+	 */
+	private void addPrivate(Object data) {
+		if (size >= containers.length - 5){
+			expand();
+		}
+		containers[size] = (E) data;
+		size++;
+	}
 
-    /**
-     * Returns an iterator over the elements in the list.
-     *
-     * @return an iterator over the elements in the list
-     */
-    @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
-            private final E[] array = toArray();
-            private int index = 0;
+	/**
+	 * Returns an iterator over the elements in the list.
+	 *
+	 * @return an iterator over the elements in the list
+	 */
+	@Override
+	public Iterator<E> iterator() {
+		return new Iterator<E>() {
+			private final E[] array = toArray();
+			private int index = 0;
 
-            @Override
-            public boolean hasNext() {
-                return index < size;
-            }
+			@Override
+			public boolean hasNext() {
+				return index < size;
+			}
 
-            @Override
-            public E next() {
-                index++;
-                return array[index - 1];
-            }
-        };
-    }
+			@Override
+			public E next() {
+				index++;
+				return array[index - 1];
+			}
+		};
+	}
 
-    /**
-     * Checks if the list is empty.
-     *
-     * @return true if the list is empty, false otherwise
-     */
-    public boolean isEmpty() {
-        return size == 0;
-    }
+	/**
+	 * Checks if the list is empty.
+	 *
+	 * @return true if the list is empty, false otherwise
+	 */
+	public boolean isEmpty() {
+		return size == 0;
+	}
 
-    /**
-     * Adds all elements from the specified ArrayList to this list.
-     *
-     * @param array the ArrayList containing elements to be added
-     * @return this ArrayList after adding the elements
-     */
-    public ArrayList<E> addAll(ArrayList<E> array) {
-        for (int i = 0; i < array.size; i++) {
-            add(array.get(i));
-        }
-        return this;
-    }
+	/**
+	 * Adds all elements from the specified ArrayList to this list.
+	 *
+	 * @param array the ArrayList containing elements to be added
+	 * @return this ArrayList after adding the elements
+	 */
+	public ArrayList<E> addAll(ArrayList<E> array) {
+		for (int i = 0; i < array.size; i++){
+			add(array.get(i));
+		}
+		return this;
+	}
 }

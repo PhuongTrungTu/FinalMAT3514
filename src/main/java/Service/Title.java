@@ -18,7 +18,7 @@ public class Title implements Comparable<Title> {
 	 * @param title       The title.
 	 * @param description The description.
 	 */
-	public Title(String title, String description) {
+	public Title(String title , String description) {
 		this.title = title;
 		this.description = description;
 	}
@@ -91,10 +91,10 @@ public class Title implements Comparable<Title> {
 	 *
 	 * @return A HashMap containing the title and description as keys with their respective values.
 	 */
-	public HashMap<String, String> mapping() {
-		HashMap<String, String> map = new HashMap<>();
-		map.put("Title", title);
-		map.put("Description", description);
+	public HashMap<String,String> mapping() {
+		HashMap<String,String> map = new HashMap<>();
+		map.put("Title" , title);
+		map.put("Description" , description);
 		return map;
 	}
 
@@ -117,13 +117,13 @@ public class Title implements Comparable<Title> {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
+		if (this == o){
 			return true;
 		}
-		if (!(o instanceof Title title1)) {
+		if (! (o instanceof Title title1)){
 			return false;
 		}
-		return Objects.equals(getTitle(), title1.getTitle());
+		return Objects.equals(getTitle() , title1.getTitle());
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Title implements Comparable<Title> {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(getTitle(), getDescription());
+		return Objects.hash(getTitle() , getDescription());
 	}
 
 	/**
@@ -142,6 +142,6 @@ public class Title implements Comparable<Title> {
 	 * @return A new Title object with the same title and description.
 	 */
 	public Title copy() {
-		return new Title(title, description);
+		return new Title(title , description);
 	}
 }

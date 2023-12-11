@@ -16,7 +16,7 @@ public class MapNode<K, E> {
 	 * @param key  The key associated with the node.
 	 * @param data The data stored in the node.
 	 */
-	public MapNode(K key, E data) {
+	public MapNode(K key , E data) {
 		this.key = key;
 		this.data = data;
 	}

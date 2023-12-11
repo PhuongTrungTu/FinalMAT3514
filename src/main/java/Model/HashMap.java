@@ -9,7 +9,7 @@ import Model.Node.MapNode;
  * @param <E> the type of values in the map
  */
 public class HashMap<K, E> {
-	private ArrayList<MapNode<K, E>> container = new ArrayList<>();
+	private final ArrayList<MapNode<K,E>> container = new ArrayList<>();
 
 	/**
 	 * Constructs an empty HashMap.
@@ -45,8 +45,8 @@ public class HashMap<K, E> {
 	 * @throws NullPointerException If the key is not found in the map.
 	 */
 	public E get(K key) {
-		for (MapNode<K, E> node : container) {
-			if (node.getKey().equals(key)) {
+		for (MapNode<K,E> node : container){
+			if (node.getKey().equals(key)){
 				return node.getData();
 			}
 		}
@@ -61,8 +61,8 @@ public class HashMap<K, E> {
 	 * @param field the key for the key-value pair
 	 * @param data  the value for the key-value pair
 	 */
-	public void put(K field, E data) {
-		container.add(new MapNode<>(field, data));
+	public void put(K field , E data) {
+		container.add(new MapNode<>(field , data));
 	}
 
 	/**
@@ -73,9 +73,9 @@ public class HashMap<K, E> {
 	@Override
 	public String toString() {
 		StringBuilder result = new StringBuilder("{");
-		for (int i = 0; i < container.size(); i++) {
+		for (int i = 0; i < container.size(); i++){
 			result.append(container.get(i).toString());
-			if (i < container.size() - 1) {
+			if (i < container.size() - 1){
 				result.append(",");
 			}
 		}
@@ -89,8 +89,8 @@ public class HashMap<K, E> {
 	 * @return {@code true} if the map contains the key, {@code false} otherwise.
 	 */
 	public boolean containsKey(K key) {
-		for (MapNode<K, E> node : container) {
-			if (node.getKey().equals(key)) {
+		for (MapNode<K,E> node : container){
+			if (node.getKey().equals(key)){
 				return true;
 			}
 		}
@@ -103,8 +103,8 @@ public class HashMap<K, E> {
 	 * @param key The key to be removed from the map.
 	 */
 	public void remove(K key) {
-		for (MapNode<K, E> node : container) {
-			if (node.getKey().equals(key)) {
+		for (MapNode<K,E> node : container){
+			if (node.getKey().equals(key)){
 				container.remove(node);
 				return;
 			}
@@ -117,9 +117,9 @@ public class HashMap<K, E> {
 	 * @param key  The key of the pair to be removed.
 	 * @param data The value of the pair to be removed.
 	 */
-	public void remove(K key, E data) {
-		for (MapNode<K, E> node : container) {
-			if (node.getKey().equals(key) && node.getData().equals(data)) {
+	public void remove(K key , E data) {
+		for (MapNode<K,E> node : container){
+			if (node.getKey().equals(key) && node.getData().equals(data)){
 				container.remove(node);
 				return;
 			}

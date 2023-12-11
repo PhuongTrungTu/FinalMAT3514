@@ -6,10 +6,10 @@ import java.util.Objects;
  * Represents a Major with a specific level.
  */
 public class Major implements Comparable<Major> {
+	private static final String[] majors = { "All" , "Back end" , "Front end" , "Test" , "Design" , "Manager" };
+	public static final int MAX = majors.length;
 	private final String MAJOR;
 	private final int LEVEL;
-	private static final String[] majors = { "All", "Back end", "Front end", "Test", "Design", "Manager" };
-	public static final int MAX = majors.length;
 
 	/**
 	 * Default constructor for Major. Initializes level as 0 and major as "All".
@@ -25,7 +25,7 @@ public class Major implements Comparable<Major> {
 	 * @param level The level of the major.
 	 */
 	public Major(int level) {
-		if (level < 0 || level >= MAX) {
+		if (level < 0 || level >= MAX){
 			level = 0;
 		}
 		this.LEVEL = level;
@@ -69,10 +69,10 @@ public class Major implements Comparable<Major> {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
+		if (this == o){
 			return true;
 		}
-		if (!(o instanceof Major major)) {
+		if (! (o instanceof Major major)){
 			return false;
 		}
 		return getLEVEL() == major.getLEVEL();
@@ -85,6 +85,6 @@ public class Major implements Comparable<Major> {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMAJOR(), getLEVEL());
+		return Objects.hash(getMAJOR() , getLEVEL());
 	}
 }

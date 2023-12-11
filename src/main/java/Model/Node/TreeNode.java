@@ -11,8 +11,8 @@ import Model.ArrayList;
 public class TreeNode<K extends Comparable<K>, E> {
 	private K key;
 	private ArrayList<E> data = new ArrayList<>();
-	private TreeNode<K, E> left;
-	private TreeNode<K, E> right;
+	private TreeNode<K,E> left;
+	private TreeNode<K,E> right;
 
 	/**
 	 * Constructs a new tree node with the specified key and data.
@@ -20,7 +20,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 * @param key  The key associated with the node.
 	 * @param data The data stored in the node.
 	 */
-	public TreeNode(K key, ArrayList<E> data) {
+	public TreeNode(K key , ArrayList<E> data) {
 		this.key = key;
 		this.data = data;
 	}
@@ -32,7 +32,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 * @param key  The key associated with the node.
 	 * @param data The data stored in the node.
 	 */
-	public TreeNode(K key, E data) {
+	public TreeNode(K key , E data) {
 		this.key = key;
 		this.data.add(data);
 	}
@@ -45,7 +45,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 * @param left  The left child of the node.
 	 * @param right The right child of the node.
 	 */
-	public TreeNode(K key, ArrayList<E> data, TreeNode<K, E> left, TreeNode<K, E> right) {
+	public TreeNode(K key , ArrayList<E> data , TreeNode<K,E> left , TreeNode<K,E> right) {
 		this.key = key;
 		this.data = data;
 		this.left = left;
@@ -59,7 +59,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 * @param data The data stored in the node.
 	 * @param left The left child of the node.
 	 */
-	public TreeNode(K key, ArrayList<E> data, TreeNode<K, E> left) {
+	public TreeNode(K key , ArrayList<E> data , TreeNode<K,E> left) {
 		this.key = key;
 		this.data = data;
 		this.left = left;
@@ -72,7 +72,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 * @param key   The key associated with the node.
 	 * @param data  The data stored in the node.
 	 */
-	public TreeNode(TreeNode<K, E> right, K key, ArrayList<E> data) {
+	public TreeNode(TreeNode<K,E> right , K key , ArrayList<E> data) {
 		this.key = key;
 		this.data = data;
 		this.right = right;
@@ -119,7 +119,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 *
 	 * @return The left child of the node.
 	 */
-	public TreeNode<K, E> getLeft() {
+	public TreeNode<K,E> getLeft() {
 		return left;
 	}
 
@@ -128,7 +128,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 *
 	 * @param left The new left child of the node.
 	 */
-	public void setLeft(TreeNode<K, E> left) {
+	public void setLeft(TreeNode<K,E> left) {
 		this.left = left;
 	}
 
@@ -137,7 +137,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 *
 	 * @return The right child of the node.
 	 */
-	public TreeNode<K, E> getRight() {
+	public TreeNode<K,E> getRight() {
 		return right;
 	}
 
@@ -146,7 +146,7 @@ public class TreeNode<K extends Comparable<K>, E> {
 	 *
 	 * @param right The new right child of the node.
 	 */
-	public void setRight(TreeNode<K, E> right) {
+	public void setRight(TreeNode<K,E> right) {
 		this.right = right;
 	}
 
