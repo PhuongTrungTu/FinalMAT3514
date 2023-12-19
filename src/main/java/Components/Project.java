@@ -170,6 +170,17 @@ public class Project {
 		graph.remove(task);
 	}
 
+	public void setTaskTitle(Task task, Title title){
+		if (tree.search(task.getTitle()).size() == 1){
+			tree.search(task.getTitle());
+		}else{
+			tree.search(task.getTitle()).remove(task);
+		}
+		task.setTitle(title);
+		tree.insert(title, task);
+
+	}
+
 	/**
 	 * Deletes the dependency between two tasks.
 	 *
@@ -333,6 +344,22 @@ public class Project {
 	 */
 	public void deleteDependentTask(int id , int dependent) {
 		tasks.get(id).deleteDependent(tasks.get(dependent));
+	}
+
+	/**
+	 * Deletes the dependency between two tasks.
+	 *
+	 * @param task      The first task.
+	 * @param dependent dependent task need to delete.
+	 */
+	public void deteteDependentTask(Task task, Task dependent){
+		if (task == null || dependent == null){
+			throw new NullPointerException("Task does not exist!");
+		} else if (!tasks.contain(task) || !tasks.contain(dependent)){
+			throw new NullPointerException("No task in project");
+		}
+		task.deleteDependent(task);
+		graph.get(task).remove(dependent);
 	}
 
 	/**
@@ -577,11 +604,5 @@ public class Project {
 				return; // Return once a person with major "All" is found
 			}
 		}
-	}
-
-	public void setTaskTitle(Task task , Title title) {
-		tree.delete(task.getTitle() , task);
-		task.setTitle(title);
-		tree.insert(title , task);
 	}
 }

@@ -17,12 +17,19 @@ public class Main {
         project1.createNewTask(2);
         project1.createNewTask("Design");
         project1.createNewTask(3);
+        project1.createNewTask(1);
+
+
         project1.get(1).setTime(5);
 
         project1.setTaskTitle(project1.search("Untitled"),new Title("Making User interface"));
         project1.setTaskTitle(project1.search("Untitled"), new Title("Test"));
+        project1.setTaskTitle(project1.search("Untitled"), new Title("BE"));
+
+        project1.search("BE").setTime(2);
 
         project1.addDependentTask("Design", "Making User interface");
+        project1.addDependentTask("Design", "BE");
         project1.search("Design").setStartDay(new Date(1, 1, 2023));
         project1.search("Design").setEndDay(new Date(3, 1, 2023));
         project1.search("Design").setTime(10);
@@ -46,5 +53,7 @@ public class Main {
         project1.update();
         manager.display();
 
+        System.out.println(project1.findLongestPath());
+        System.out.println(project1.maxDay());
     }
 }
