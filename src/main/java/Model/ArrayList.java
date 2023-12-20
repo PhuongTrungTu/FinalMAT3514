@@ -276,4 +276,9 @@ public class ArrayList<E> implements Iterable<E> {
 		}
 		return this;
 	}
+
+	public void clear(){
+		containers = (E[]) new Object[containers.length];
+		size = 0;
+	}
 }

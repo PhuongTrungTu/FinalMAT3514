@@ -13,6 +13,36 @@ public class Date implements Comparable<Date> {
 	private int month = 1;
 	private int year = 2023;
 
+	private void adjustDate() {
+		// Xử lý nếu ngày hoặc tháng vượt quá giới hạn
+		if (month > 12) {
+			year += (month - 1) / 12;
+			month = (month - 1) % 12 + 1;
+		}
+
+		// Kiểm tra nếu tháng có 30 hoặc 31 ngày
+		int daysInMonth = switch (month){
+			case 4 , 6 , 9 , 11 -> 30;
+			case 2 -> (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) ? 29 : 28;
+			default -> 31;
+		};
+
+		// Xử lý nếu ngày là số âm
+		while (day <= 0) {
+			month--;
+			if (month == 0) {
+				month = 12;
+				year--;
+			}
+			day += daysInMonth;
+		}
+
+		// Xử lý nếu ngày vượt quá giới hạn của tháng
+		if (day > daysInMonth) {
+			month += day / daysInMonth;
+			day = day % daysInMonth;
+		}
+	}
 	/**
 	 * Constructs a Date object with the specified day, month, and year.
 	 *
@@ -24,6 +54,8 @@ public class Date implements Comparable<Date> {
 		this.day = day;
 		this.month = month;
 		this.year = year;
+		adjustDate();
+		adjustDate();
 	}
 
 	/**
@@ -201,5 +233,10 @@ public class Date implements Comparable<Date> {
 		map.put("Month" , month);
 		map.put("Year" , year);
 		return map;
+	}
+
+	public static void main(String[] args) {
+		Date date = new Date(35,12,2023);
+		System.out.println(date);
 	}
 }

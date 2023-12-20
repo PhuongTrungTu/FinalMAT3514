@@ -244,17 +244,18 @@ public class Project {
 	 *
 	 * @return The maximum duration of the project in days.
 	 */
-	public int maxDay() {
-		ArrayList<Task> tasks = findLongestPath();
-		if (tasks.isEmpty()){
+
+	public int getLongestPathWeight(ArrayList<Task> longestPath) {
+		if (longestPath.isEmpty()) {
 			return 0;
 		}
 
-		int sum = 0;
-		for (int i = 0; i < tasks.size(); i++){
-			sum += tasks.get(i).getTime();
+		int weight = 0;
+		for (int i = 0; i < longestPath.size(); i++) {
+			weight += longestPath.get(i).getTime();
 		}
-		return sum;
+
+		return weight;
 	}
 
 	/**
@@ -262,31 +263,36 @@ public class Project {
 	 *
 	 * @return An ArrayList representing the longest path of tasks.
 	 */
+	/**
+	 * Deletes the dependency between two tasks based on their indices.
+	 *
+	 * @param id        The index of the task.
+	 * @param dependent The index of the dependent task.
+	 */
 	public ArrayList<Task> findLongestPath() {
-		update();
+		ArrayList<Task>        longestPath = new ArrayList<>();
+		HashMap<Task, Integer> maxTimeMap  = new HashMap<>();
 
-		// Using map for storegare best time for task.
-		HashMap<Task,Integer> maxTimeMap = new HashMap<>();
-
-		// finding path for each task
-		for (Task task : tasks){
-			findLongestPathForTask(task , maxTimeMap);
-		}
-
-		//find task have largest time
-		Task maxTimeTask = null;
-		int  maxTime     = 0;
-
-		for (Task task : tasks){
-			if (maxTimeMap.containsKey(task) && maxTimeMap.get(task) > maxTime){
-				maxTime = maxTimeMap.get(task);
-				maxTimeTask = task;
+		for (Task vertex : tasks) {
+			int maxTime = findLongestPathForTask(vertex, maxTimeMap);
+			if (maxTime > maxTimeMap.getOrDefault(longestPath.isEmpty() ? null : longestPath.get(0), 0)) {
+				longestPath.clear();
+				longestPath.add(vertex);
 			}
 		}
 
-		// Build list of path from task have largest time
-		ArrayList<Task> longestPath = new ArrayList<>();
-		buildLongestPath(maxTimeTask , longestPath);
+		buildLongestPath(longestPath.get(0), longestPath);
+
+		int maxTime = getLongestPathWeight(longestPath);
+		for (Task task: tasks){
+			if (task.getDependentTasks().isEmpty()){
+				if (maxTime < task.getTime()){
+					maxTime = task.getTime();
+					longestPath.clear();
+					longestPath.add(task);
+				}
+			}
+		}
 
 		return longestPath;
 	}
@@ -298,25 +304,23 @@ public class Project {
 	 * @param maxTimeMap A HashMap storing the maximum time for each task to avoid redundant calculations.
 	 * @return The maximum time for the given task and its dependencies.
 	 */
-	private int findLongestPathForTask(Task task , HashMap<Task,Integer> maxTimeMap) {
-		// If the total time for this task has already been calculated, return the precomputed value
-		if (maxTimeMap.containsKey(task)){
+	private int findLongestPathForTask(Task task,HashMap<Task, Integer> maxTimeMap) {
+		if (maxTimeMap.containsKey(task)) {
 			return maxTimeMap.get(task);
 		}
 
-		int maxPathTime = 0;
+		int maxTime = 0;
+		for (Task neighbor : task.getDependentTasks()) {
+			int neighborTime = findLongestPathForTask(neighbor, maxTimeMap);
+			int totalTime = neighborTime + graph.get(task).get(neighbor);
 
-		// Calculate the total time for all dependent tasks
-		for (Task dependentTask : task.getDependentTasks()){
-			int pathTime = findLongestPathForTask(dependentTask , maxTimeMap);
-			maxPathTime = Math.max(maxPathTime , pathTime);
+			if (totalTime > maxTime) {
+				maxTime = totalTime;
+				maxTimeMap.put(task, maxTime);
+			}
 		}
 
-		// The total time for the current task is the sum of the total time for all dependent tasks
-		// plus the time required for the current task
-		maxTimeMap.put(task , maxPathTime + task.getTime());
-
-		return maxTimeMap.get(task);
+		return maxTime;
 	}
 
 	/**
@@ -325,23 +329,22 @@ public class Project {
 	 * @param task        The task for which the longest path is to be built.
 	 * @param longestPath An ArrayList to store the tasks in the longest path.
 	 */
-	private void buildLongestPath(Task task , ArrayList<Task> longestPath) {
-		if (task != null){
-			// Recursively build the longest path for dependent tasks
-			for (Task dependentTask : task.getDependentTasks()){
-				buildLongestPath(dependentTask , longestPath);
+	private void buildLongestPath(Task task, ArrayList<Task> longestPath) {
+		if (task == null) {
+			return;
+		}
+
+		for (Task neighbor : task.getDependentTasks()) {
+			if (findLongestPathForTask(neighbor, new HashMap<>()) + graph.get(task).get(neighbor) == findLongestPathForTask(task, new HashMap<>())) {
+				longestPath.add(neighbor);
+				buildLongestPath(neighbor, longestPath);
+				break;
 			}
-			// Add the current task to the longest path
-			longestPath.add(task);
 		}
 	}
 
-	/**
-	 * Deletes the dependency between two tasks based on their indices.
-	 *
-	 * @param id        The index of the task.
-	 * @param dependent The index of the dependent task.
-	 */
+	// TODO
+
 	public void deleteDependentTask(int id , int dependent) {
 		tasks.get(id).deleteDependent(tasks.get(dependent));
 	}
@@ -604,5 +607,9 @@ public class Project {
 				return; // Return once a person with major "All" is found
 			}
 		}
+	}
+
+	public int maxDay() {
+		return getLongestPathWeight(findLongestPath());
 	}
 }

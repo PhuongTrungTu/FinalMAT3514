@@ -26,14 +26,16 @@ public class Main {
         project1.setTaskTitle(project1.search("Untitled"), new Title("Test"));
         project1.setTaskTitle(project1.search("Untitled"), new Title("BE"));
 
-        project1.search("BE").setTime(2);
-
-        project1.addDependentTask("Design", "Making User interface");
         project1.addDependentTask("Design", "BE");
+        project1.addDependentTask("Design", "Making User interface");
+
+
         project1.search("Design").setStartDay(new Date(1, 1, 2023));
         project1.search("Design").setEndDay(new Date(3, 1, 2023));
         project1.search("Design").setTime(10);
         project1.search("Design").setMajorLabel(new Major(4));
+
+        project1.search("BE").setTime(5);
 
         project1.createNewTask("Des");
         project1.search("Des").setMajorLabel(new Major(4));

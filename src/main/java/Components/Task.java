@@ -478,6 +478,7 @@ public class Task implements Comparable<Task> {
 		}
 
 		for (Task dependentTask : dependentTasks){
+			dependentTask.setStartDay(endDay);
 			dependentTask.updateProgress();
 		}
 	}

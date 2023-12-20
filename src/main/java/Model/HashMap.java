@@ -125,4 +125,13 @@ public class HashMap<K, E> {
 			}
 		}
 	}
+
+	public E getOrDefault(K key , E i) {
+		for (MapNode<K, E> node: container){
+			if (node.getKey().equals(key)){
+				return node.getData();
+			}
+		}
+		return i;
+	}
 }
