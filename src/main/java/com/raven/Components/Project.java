@@ -1,0 +1,645 @@
+/**
+ * The {@code Project} class represents a project with tasks, dependencies, and
+ * various functionalities for task management and assignment. It includes
+ * methods for task creation, dependency management, progress tracking, sorting,
+ * and display styles.
+ *
+ * <p>
+ * This class utilizes a binary search tree for efficient task retrieval and
+ * manipulation.</p>
+ *
+ * <p>
+ * Instances of this class can be created with a title, a list of tasks, a
+ * label, and a repository.</p>
+ *
+ * @author Grizmo
+ * @version 1.0
+ */
+package com.raven.Components;
+
+import com.raven.Service.*;
+import com.raven.frame.ArrayList;
+import com.raven.frame.BinarySearchingTree;
+import com.raven.frame.HashMap;
+import com.raven.swing.table.ModelAction;
+import com.raven.swing.table.EventAction;
+import java.text.DecimalFormat;
+
+/**
+ * Represents a project with tasks, dependencies, and various functionalities
+ * for task management and assignment.
+ */
+public class Project {
+
+    /**
+     * The title of the project.
+     */
+    private Title title = new Title("");
+
+    /**
+     * The list of tasks in the project.
+     */
+    private ArrayList<Task> tasks = new ArrayList<>();
+
+    /**
+     * The label associated with the project.
+     */
+    private Label label = new Label();
+
+    /**
+     * The progress of the project
+     */
+    private String progress;
+
+    /**
+     * The repository associated with the project.
+     */
+    private Repository repository = new Repository("", "");
+
+    /**
+     * The deadline of project
+     */
+    private Date deadline;
+
+    /**
+     * A graph representation of task dependencies in the project.
+     */
+    private final HashMap<Task, HashMap<Task, Integer>> graph = new HashMap<>();
+
+    /**
+     * A binary search tree for efficient task retrieval.
+     */
+    private final BinarySearchingTree<Title, Task> tree = new BinarySearchingTree<>();
+
+    /**
+     * Default constructor for the {@code Project} class.
+     */
+    public Project() {
+    }
+
+    /**
+     * Constructs a Project with the specified parameters.
+     *
+     * @param title The title of the project.
+     * @param tasks The list of tasks in the project.
+     * @param repository The repository associated with the project.
+     */
+    public Project(Title title, ArrayList<Task> tasks, Repository repository) {
+        this.title = title;
+        this.tasks = tasks;
+        this.repository = repository;
+    }
+
+    public Project(Title title, String progress, Repository repository, Date deadline) {
+        this.title = title;
+        this.progress = progress;
+        this.repository = repository;
+        this.deadline = deadline;
+    }
+
+    /**
+     * Constructs a Project with a specified title.
+     *
+     * @param title The title of the project.
+     */
+    public Project(Title title) {
+        this.title = title;
+        this.tasks = new ArrayList<>();
+        this.label = new Label();
+        this.repository = new Repository("");
+    }
+
+    /**
+     * Sorts a list of people by their majors.
+     *
+     * @param peopleList The list of people to be sorted.
+     * @return An ArrayList of people sorted by their majors.
+     */
+    public static ArrayList<People> sortPeopleByMajor(ArrayList<People> peopleList) {
+        ArrayList<People> result = new ArrayList<>();
+        ArrayList<ArrayList<People>> container = new ArrayList<>();
+        for (int i = 0; i < Major.MAX; i++) {
+            container.add(new ArrayList<>());
+        }
+        for (People people : peopleList) {
+            for (int j = 0; j < container.size(); j++) {
+                if (people.getMajors().contain(new Major(j))) {
+                    container.get(j).add(people);
+                }
+            }
+        }
+
+        for (int i = 0; i < container.size(); i++) {
+            result.addAll(container.get(i));
+        }
+        return result;
+    }
+
+    /**
+     * Creates a new task of the specified type and adds it to the project.
+     *
+     * @param type The type of the task to be created.
+     */
+    public void createNewTask(int type) {
+        Task task = new Task(type);
+        task.setMajorLabel(new Major(type));
+        addTask(task);
+    }
+
+    /**
+     * Creates a new task with the specified title and adds it to the project.
+     *
+     * @param title The title of the task to be created.
+     */
+    public void createNewTask(String title) {
+        Task task = new Task(title);
+        addTask(task);
+    }
+
+    /**
+     * Adds the specified task to the project.
+     *
+     * @param task The task to be added.
+     */
+    public void addTask(Task task) {
+        tasks.add(task);
+        graph.put(task, new HashMap<>());
+        tree.insert(task.getTitle(), task);
+    }
+
+    /**
+     * Deletes a task from the project, its dependencies, and associated data
+     * structures.
+     *
+     * @param task The task to be deleted from the project.
+     */
+    public void deleteTask(Task task) {
+        tasks.remove(task);
+
+        // Delete dependencies for all tasks in the project
+        for (Task task1 : tasks) {
+            deleteDependentTask(task1, task);
+        }
+
+        // Remove the task from the tree data structure
+        if (tree.search(getTittle()).size() == 1) {
+            tree.delete(task.getTitle());
+        } else {
+            tree.search(task.getTitle()).remove(task);
+        }
+
+        // Remove the task from the graph data structure
+        graph.remove(task);
+    }
+
+    public void setTaskTitle(Task task, Title title) {
+        if (tree.search(task.getTitle()).size() == 1) {
+            tree.search(task.getTitle());
+        } else {
+            tree.search(task.getTitle()).remove(task);
+        }
+        task.setTitle(title);
+        tree.insert(title, task);
+
+    }
+
+    /**
+     * Deletes the dependency between two tasks.
+     *
+     * @param task The task from which the dependency is removed.
+     * @param dependent The task that is dependent on the first task.
+     */
+    public void deleteDependentTask(Task task, Task dependent) {
+        task.getDependentTasks().remove(dependent);
+    }
+
+    /**
+     * Adds a dependency between two tasks by their indices.
+     *
+     * @param task The index of the task.
+     * @param dependentTask The index of the dependent task.
+     */
+    public void addDependentTask(int task, int dependentTask) {
+        addDependentTask(tasks.get(task), tasks.get(dependentTask));
+    }
+
+    /**
+     * Adds a dependency between two tasks by their titles.
+     *
+     * @param task1 The title of the task.
+     * @param task2 The title of the dependent task.
+     */
+    public void addDependentTask(String task1, String task2) {
+        addDependentTask(search(task1), search(task2));
+    }
+
+    /**
+     * Adds a dependency between two tasks.
+     *
+     * @param task1 The first task.
+     * @param task2 The second task.
+     */
+    public void addDependentTask(Task task1, Task task2) {
+        if (!tasks.contain(task1) && !tasks.contain(task2)) {
+            throw new IllegalArgumentException(task1.getTitle().getTitle() + ", " + task2.getTitle() + "are not in project!");
+        } else if (!tasks.contain(task1)) {
+            addTask(task1);
+        } else if (!tasks.contain(task2)) {
+            addTask(task2);
+        }
+        graph.get(task1).put(task2, task1.getTime());
+
+        task1.addDependentTask(task2);
+    }
+
+    /**
+     * Updates the progress of all tasks in the project.
+     */
+    public void update() {
+        for (int i = 0; i < tasks.size(); i++) {
+            tasks.get(i).updateProgress();
+        }
+    }
+
+    /**
+     * Calculates the maximum duration of the project.
+     *
+     * @return The maximum duration of the project in days.
+     */
+    public int getLongestPathWeight(ArrayList<Task> longestPath) {
+        if (longestPath.isEmpty()) {
+            return 0;
+        }
+
+        int weight = 0;
+        for (int i = 0; i < longestPath.size(); i++) {
+            weight += longestPath.get(i).getTime();
+        }
+
+        return weight;
+    }
+
+    /**
+     * Deletes the dependency between two tasks based on their indices.
+     *
+     */
+    public ArrayList<Task> findLongestPath() {
+        ArrayList<Task> longestPath = new ArrayList<>();
+        HashMap<Task, Integer> maxTimeMap = new HashMap<>();
+
+        for (Task vertex : tasks) {
+            int maxTime = findLongestPathForTask(vertex, maxTimeMap);
+            if (maxTime > maxTimeMap.getOrDefault(longestPath.isEmpty() ? null : longestPath.get(0), 0)) {
+                longestPath.clear();
+                longestPath.add(vertex);
+            }
+        }
+
+        buildLongestPath(longestPath.get(0), longestPath);
+
+        int maxTime = getLongestPathWeight(longestPath);
+        for (Task task : tasks) {
+            if (task.getDependentTasks().isEmpty()) {
+                if (maxTime < task.getTime()) {
+                    maxTime = task.getTime();
+                    longestPath.clear();
+                    longestPath.add(task);
+                }
+            }
+        }
+
+        return longestPath;
+    }
+
+    /**
+     * Recursive method to find the longest path for a given task in the
+     * project.
+     *
+     * @param task The task for which the longest path is to be found.
+     * @param maxTimeMap A HashMap storing the maximum time for each task to
+     * avoid redundant calculations.
+     * @return The maximum time for the given task and its dependencies.
+     */
+    private int findLongestPathForTask(Task task, HashMap<Task, Integer> maxTimeMap) {
+        if (maxTimeMap.containsKey(task)) {
+            return maxTimeMap.get(task);
+        }
+
+        int maxTime = 0;
+        for (Task neighbor : task.getDependentTasks()) {
+            int neighborTime = findLongestPathForTask(neighbor, maxTimeMap);
+            int totalTime = neighborTime + graph.get(task).get(neighbor);
+
+            if (totalTime > maxTime) {
+                maxTime = totalTime;
+                maxTimeMap.put(task, maxTime);
+            }
+        }
+
+        return maxTime;
+    }
+
+    /**
+     * Builds the longest path for a given task in the project.
+     *
+     * @param task The task for which the longest path is to be built.
+     * @param longestPath An ArrayList to store the tasks in the longest path.
+     */
+    private void buildLongestPath(Task task, ArrayList<Task> longestPath) {
+        if (task == null) {
+            return;
+        }
+
+        for (Task neighbor : task.getDependentTasks()) {
+            if (findLongestPathForTask(neighbor, new HashMap<>()) + graph.get(task).get(neighbor) == findLongestPathForTask(task, new HashMap<>())) {
+                longestPath.add(neighbor);
+                buildLongestPath(neighbor, longestPath);
+                break;
+            }
+        }
+    }
+
+    // TODO
+    public void deleteDependentTask(int id, int dependent) {
+        tasks.get(id).deleteDependent(tasks.get(dependent));
+    }
+
+    /**
+     * Deletes the dependency between two tasks.
+     *
+     * @param task The first task.
+     * @param dependent dependent task need to delete.
+     */
+    public void deteteDependentTask(Task task, Task dependent) {
+        if (task == null || dependent == null) {
+            throw new NullPointerException("Task does not exist!");
+        } else if (!tasks.contain(task) || !tasks.contain(dependent)) {
+            throw new NullPointerException("No task in project");
+        }
+        task.deleteDependent(task);
+        graph.get(task).remove(dependent);
+    }
+
+    /**
+     * Removes a task from the project and its dependencies.
+     *
+     * @param task The task to be removed from the project.
+     */
+    public void removeTask(Task task) {
+        tasks.remove(task);
+        for (int i = 0; i < tasks.size(); i++) {
+            tasks.get(i).getDependentTasks().remove(task);
+        }
+    }
+
+    /**
+     * Gets the list of tasks in the project.
+     *
+     * @return An ArrayList containing the tasks in the project.
+     */
+    public ArrayList<Task> tasks() {
+        return tasks;
+    }
+
+    /**
+     * Gets a task from the project based on its index.
+     *
+     * @param index The index of the task.
+     * @return The task at the specified index.
+     */
+    public Task get(int index) {
+        return tasks.get(index);
+    }
+
+    /**
+     * Gets the title of the project.
+     *
+     * @return The title of the project.
+     */
+    public Title getTittle() {
+        return title;
+    }
+
+    /**
+     * Sets the title of the project.
+     *
+     * @param title The new title of the project.
+     */
+    public void setTittle(Title title) {
+        this.title = title;
+    }
+
+    /**
+     * Gets the list of tasks in the project.
+     *
+     * @return An ArrayList containing the tasks in the project.
+     */
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    /**
+     * Sets the list of tasks in the project.
+     *
+     * @param tasks The new list of tasks for the project.
+     */
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    /**
+     * Gets the label associated with the project.
+     *
+     * @return The label associated with the project.
+     */
+    public Label getLabel() {
+        return label;
+    }
+
+    /**
+     * Sets the label for the project.
+     *
+     * @param label The new label for the project.
+     */
+    public void setLabel(Label label) {
+        this.label = label;
+    }
+
+    /**
+     * Gets the repository associated with the project.
+     *
+     * @return The repository associated with the project.
+     */
+    public Repository getRepository() {
+        return repository;
+    }
+
+    /**
+     * Sets the repository for the project.
+     *
+     * @param repository The new repository for the project.
+     */
+    public void setRepository(Repository repository) {
+        this.repository = repository;
+    }
+
+    /**
+     * Sorts the tasks in the project by title.
+     */
+    public void sortByTittle() {
+        tasks = Sort.sort(tasks);
+    }
+
+    /**
+     * Sorts the tasks in the project by day.
+     */
+    public void sortByDay() {
+        tasks = Sort.sortByDay(tasks);
+    }
+
+    /**
+     * Sorts the tasks in the project by time.
+     */
+    public void sortByTime() {
+        tasks = Sort.sortByTime(tasks);
+    }
+
+    /**
+     * Sorts the tasks in the project by degree.
+     */
+    public void sortByDegree() {
+        tasks = Sort.sortByDegree(tasks);
+    }
+
+    /**
+     * Sorts the tasks in the project by major.
+     */
+    public void sortByMajor() {
+        tasks = Sort.sortByMajor(tasks);
+    }
+
+    /**
+     * Displays the tasks in a roadmap style, sorted by day, up to the current
+     * date.
+     */
+    public void roadMapDisplayStyle() {
+        sortByDay();
+        int index = 0;
+        for (int i = 0; i < getTasks().size(); i++) {
+            if (tasks.get(i).getEndDay().compareTo(Date.today()) >= 0) {
+                index = i;
+                break;
+            }
+        }
+
+        ArrayList<?> result = ArrayList.copy(tasks, index);
+        System.out.println(result);
+    }
+
+    /**
+     * Displays the tasks sorted by degree.
+     */
+    public void degreeDisplayStyle() {
+        sortByDegree();
+        System.out.println(tasks);
+    }
+
+    /**
+     * Displays all tasks in the project along with their details.
+     */
+    public void display() {
+        for (int i = 0; i < tasks().size(); i++) {
+            System.out.println("Task: " + (i + 1));
+            tasks.get(i).display();
+        }
+        System.out.println("************************");
+    }
+
+    /**
+     * Searches for a task in the project based on its title.
+     *
+     * @param title The title of the task to be searched.
+     * @return The task with the specified title.
+     * @throws NullPointerException If the task with the specified title is not
+     * found.
+     */
+    public Task search(String title) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTitle().getTitle().equals(title)) {
+                return tasks.get(i);
+            }
+        }
+        throw new NullPointerException("Task " + title + " didn't created in project");
+    }
+
+    /**
+     * Searches for a task in the project based on its title.
+     *
+     * @param title The title of the task to be searched.
+     * @return The task with the specified title.
+     * @throws NullPointerException If the task with the specified title is not
+     * found.
+     */
+    public Task search(Title title) {
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getTitle().equals(title)) {
+                return tasks.get(i);
+            }
+        }
+        throw new NullPointerException("Task " + title.getTitle() + " didn't created in project");
+    }
+
+    /**
+     * Assigns people from a given list to tasks based on their majors.
+     *
+     * @param peopleList The list of people available for task assignment.
+     */
+    public void assignTasks(ArrayList<People> peopleList) {
+        for (Task task : tasks) {
+            assignPeopleToTask(peopleList, task);
+        }
+    }
+
+    /**
+     * Assigns people from a given list to a specific task based on their
+     * majors.
+     *
+     * @param peopleList The list of people available for task assignment.
+     * @param task The task to which people are being assigned.
+     */
+    private void assignPeopleToTask(ArrayList<People> peopleList, Task task) {
+        for (People person : peopleList) {
+            if (person.getMajors().contain(task.getMajorLabel())) {
+                task.addAssignment(person, false);
+                return; // Return once a suitable person is found for the task
+            }
+        }
+
+        // If no suitable person is found, try to assign a person with major "All"
+        for (People person : peopleList) {
+            if (person.getMajors().contain(new Major(0)) && person.hasAssignedTask()) {
+                task.addAssignment(person, false);
+                return; // Return once a person with major "All" is found
+            }
+        }
+    }
+
+    public int maxDay() {
+        return getLongestPathWeight(findLongestPath());
+    }
+
+    public Object[] toRowTable(EventAction event) {
+ 
+        // Tạo đối tượng ModelAction với thông tin của đối tượng Project
+        ModelAction modelAction = new ModelAction(this, event);
+
+        // Tạo mảng Object chứa thông tin của hàng
+        return new Object[]{
+            title.getTitle(),
+            progress,
+            repository.getLink(),
+            deadline,
+            modelAction
+        };
+    }
+}
